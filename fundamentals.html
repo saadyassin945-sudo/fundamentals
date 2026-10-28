@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title> Fundamentals of Nursing </title>
+    <style>
+        /* ===== BASE ===== */
+        :root {
+            --primary: #00d4ff;
+            --primary-dark: #0099cc;
+            --accent: #facc15;
+            --danger: #f87171;
+            --success: #34d399;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text: #e8edf5;
+            --muted: #94a3b8;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --glow: 0 0 30px rgba(0, 212, 255, 0.06);
+            --radius: 16px;
+            --header-bg: rgba(255, 255, 255, 0.03);
+            --header-border: rgba(255, 255, 255, 0.04);
+            --footer-border: rgba(255, 255, 255, 0.03);
+            --table-header-bg: rgba(0, 212, 255, 0.08);
+            --card-title-bg: rgba(0, 212, 255, 0.06);
+            --highlight-bg: #facc15;
+            --highlight-text: #0f172a;
+        }
+        [data-theme="light"] {
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --text: #0f172a;
+            --muted: #475569;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --glow: 0 0 30px rgba(0, 212, 255, 0.02);
+            --header-bg: rgba(255, 255, 255, 0.7);
+            --header-border: rgba(0, 0, 0, 0.04);
+            --footer-border: rgba(0, 0, 0, 0.04);
+            --table-header-bg: rgba(0, 212, 255, 0.12);
+            --card-title-bg: rgba(0, 212, 255, 0.08);
+        }
+        .highlight-text {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* ===== BACKGROUND: STATIC ELEGANT GRADIENT ===== */
+        body {
+            font-family: 'Segoe UI', Tahoma, 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a0e1a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text);
+            padding: 16px 8px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f8fafc 100%);
+            background-attachment: fixed;
+        }
+        
+        .app { max-width: 1100px; width: 100%; }
+
+        /* ===== HEADER ===== */
+        .header { text-align: center; margin-bottom: 20px; padding: 16px 16px; background: var(--header-bg); border-radius: 20px; border: 1px solid var(--header-border); backdrop-filter: blur(4px); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: #fff; text-shadow: 0 4px 25px rgba(0, 212, 255, 0.15); transition: color 0.3s ease; }
+        [data-theme="light"] .header h1 { color: #0f172a; text-shadow: none; }
+        .header h1 .highlight { background: linear-gradient(135deg, var(--primary), #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .creator { color: var(--muted); font-size: 0.75rem; margin-top: 4px; }
+        .header .creator i { color: var(--danger); }
+        .header .creator .name { color: var(--text); font-weight: 700; }
+        .theme-toggle { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 50%; width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; color: var(--text); }
+        .theme-toggle:hover { border-color: var(--primary); background: rgba(0, 212, 255, 0.08); transform: scale(1.05); }
+        [data-theme="light"] .theme-toggle { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.06); }
+        [data-theme="light"] .theme-toggle:hover { border-color: var(--primary); background: rgba(0, 212, 255, 0.1); }
+
+        /* ===== TABS ===== */
+        .tabs-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; justify-content: center; }
+        .tab-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 30px; padding: 8px 14px; font-size: 0.7rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s ease; text-align: center; line-height: 1.3; }
+        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
+        .tab-btn.active { border-color: var(--primary); background: rgba(0, 212, 255, 0.08); color: var(--primary); }
+        .tab-btn .en { display: block; font-size: 0.7rem; }
+        .tab-btn .ar { display: block; font-size: 0.55rem; opacity: 0.7; }
+
+        /* ===== CARDS ===== */
+        .card { background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--card-border); border-radius: var(--radius); box-shadow: var(--shadow), var(--glow); padding: 18px 14px; margin-bottom: 16px; transition: background 0.3s ease, border 0.3s ease; display: none; }
+        .card.active { display: block; }
+        .card h2 { font-size: 1.3rem; color: var(--text); border-right: 4px solid var(--primary); padding-right: 12px; margin-bottom: 16px; font-weight: 700; }
+        .card h2 i { color: var(--accent); margin-left: 6px; }
+
+        /* ===== SLIDES ===== */
+        .slide-container { position: relative; min-height: 300px; }
+        .slide { display: none; animation: fadeSlide 0.3s ease; }
+        .slide.active { display: block; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .slide-progress { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.8rem; color: var(--muted); }
+        .slide-progress .bar { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.06); border-radius: 10px; margin: 0 12px; overflow: hidden; }
+        .slide-progress .bar .fill { height: 100%; background: linear-gradient(90deg, var(--primary), #818cf8); border-radius: 10px; transition: width 0.3s ease; }
+        .slide-progress .count { font-weight: 600; white-space: nowrap; }
+        .slide-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+        .slide-nav .btn-nav { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; padding: 10px 20px; font-size: 0.9rem; font-weight: 600; color: var(--text); cursor: pointer; transition: all 0.2s ease; min-width: 80px; text-align: center; }
+        .slide-nav .btn-nav:hover:not(:disabled) { background: rgba(0, 212, 255, 0.08); border-color: var(--primary); }
+        .slide-nav .btn-nav:disabled { opacity: 0.3; cursor: default; }
+        .slide-nav .btn-nav.primary { background: var(--primary); color: #0a0e1a; border-color: var(--primary); }
+        .slide-nav .btn-nav.primary:hover:not(:disabled) { background: var(--primary-dark); border-color: var(--primary-dark); }
+        [data-theme="light"] .slide-nav .btn-nav { background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.06); }
+        [data-theme="light"] .slide-nav .btn-nav:hover:not(:disabled) { background: rgba(0, 212, 255, 0.1); }
+
+        /* ===== CARDS GRID ===== */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 8px; }
+        .topic-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px 14px 12px; transition: border-color 0.2s ease; display: flex; flex-direction: column; }
+        .topic-card:hover { border-color: var(--primary); }
+        .topic-card .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--card-title-bg); }
+        .topic-card .card-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); line-height: 1.4; flex: 1; }
+        .topic-card .card-title-ar { color: var(--muted); font-weight: 400; display: none; }
+        .topic-card .card-title-ar.show { display: inline; }
+        .topic-card .card-title-en { display: inline; }
+        .topic-card .card-title-en.hidden { display: none; }
+        .topic-card .translate-btn { background: rgba(0, 212, 255, 0.08); border: 1px solid var(--card-border); border-radius: 20px; padding: 3px 12px; font-size: 0.6rem; color: var(--primary); cursor: pointer; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; margin-right: 8px; }
+        .topic-card .translate-btn:hover { background: rgba(0, 212, 255, 0.18); border-color: var(--primary); }
+        .topic-card .translate-btn.active { background: rgba(0, 212, 255, 0.18); border-color: var(--primary); }
+        .topic-card .card-items { list-style: none; padding: 0; margin: 0; flex: 1; }
+        .topic-card .card-items li { padding: 4px 0 4px 0; line-height: 1.7; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        [data-theme="light"] .topic-card .card-items li { border-bottom-color: rgba(0, 0, 0, 0.04); }
+        .topic-card .card-items li:last-child { border-bottom: none; }
+        .topic-card .item-en { font-weight: 600; color: var(--text); font-size: 0.9rem; line-height: 1.7; display: block; text-align: left; direction: ltr; cursor: pointer; transition: color 0.2s; }
+        .topic-card .item-en:hover { color: var(--primary); }
+        .topic-card .item-ar { color: var(--muted); font-size: 0.82rem; line-height: 1.7; text-align: right; direction: rtl; display: none; margin-top: 2px; padding-right: 8px; border-right: 2px solid rgba(0, 212, 255, 0.2); }
+        .topic-card .item-ar.show { display: block; }
+        .topic-card .card-items.numbered { counter-reset: item-counter; }
+        .topic-card .card-items.numbered li { padding-right: 28px; position: relative; counter-increment: item-counter; }
+        .topic-card .card-items.numbered li::before { content: counter(item-counter) "-"; position: absolute; right: 2px; color: var(--primary); font-weight: 700; font-size: 0.85rem; }
+        .topic-card .card-items.simple li { padding-right: 0; }
+        .topic-card .card-items.simple li::before { display: none; }
+
+        .info-table-wrap { overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--card-border); grid-column: 1 / -1; }
+        .info-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 500px; }
+        .info-table th { background: var(--table-header-bg); color: var(--primary); padding: 8px 6px; text-align: center; border-bottom: 2px solid var(--primary); font-weight: 700; }
+        .info-table td { padding: 8px 6px; border-bottom: 1px solid var(--card-border); vertical-align: top; line-height: 1.5; }
+        .info-table tr:last-child td { border-bottom: none; }
+        .info-table .ar-text { border-right: none; padding-right: 0; margin-top: 2px; font-size: 0.78rem; display: block; color: var(--muted); }
+        .info-table .en-text { font-size: 0.85rem; }
+
+        @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } .info-table { font-size: 0.72rem; min-width: 350px; } .info-table th, .info-table td { padding: 4px 3px; } .topic-card .card-title { font-size: 0.85rem; } .topic-card .item-en { font-size: 0.85rem; } .topic-card .item-ar { font-size: 0.78rem; } }
+        @media (min-width: 601px) and (max-width: 900px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 901px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1200px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .footer-credit { text-align: center; color: rgba(255, 255, 255, 0.12); font-size: 0.7rem; margin-top: 24px; padding: 10px 0; border-top: 1px solid var(--footer-border); }
+        [data-theme="light"] .footer-credit { color: rgba(0, 0, 0, 0.2); }
+        .footer-credit i { color: var(--danger); margin: 0 4px; }
+        .footer-credit .name { color: var(--primary); font-weight: 600; }
+        @media (max-width: 768px) { body { padding: 8px 4px; } .header { padding: 12px 10px; } .header h1 { font-size: 1.4rem; } .header .creator { font-size: 0.65rem; } .theme-toggle { width: 36px; height: 36px; font-size: 1rem; } .tab-btn { padding: 6px 10px; font-size: 0.6rem; } .tab-btn .en { font-size: 0.6rem; } .tab-btn .ar { font-size: 0.5rem; } .card { padding: 14px 10px; } .card h2 { font-size: 1.1rem; padding-right: 8px; } .slide-nav .btn-nav { padding: 8px 12px; font-size: 0.8rem; min-width: 60px; } .topic-card { padding: 10px 10px; } }
+        .topic-card.full-width { grid-column: 1 / -1; }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1><span class="highlight">Fundamentals</span></h1>
+                    <div class="creator"><i class="fas fa-user-graduate"></i> Created by <span class="name">MR. YASSIN THARWAT</span></div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع">🌙</button>
+            </div>
+        </div>
+        <div class="tabs-wrap" id="tabsContainer"></div>
+        <div id="sectionsContainer"></div>
+        <div class="footer-credit">
+            <i class="fas fa-heart"></i> Created by <span class="name">MR. YASSIN THARWAT</span> <i class="fas fa-heart"></i>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  THEME & SLIDE SYSTEM
+        // ================================================================
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('themeToggle').textContent = theme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+        }
+        function toggleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+
+        let slideState = {};
+        function initSlideState(partId, totalSlides) { slideState[partId] = { current: 0, total: totalSlides }; }
+        function renderSlide(partId, containerId) {
+            const state = slideState[partId];
+            if (!state) return;
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const slides = container.querySelectorAll('.slide');
+            slides.forEach((s, i) => s.classList.toggle('active', i === state.current));
+            const progressBar = container.querySelector('.slide-progress .fill');
+            const countSpan = container.querySelector('.slide-progress .count');
+            if (progressBar) { const pct = ((state.current + 1) / state.total) * 100; progressBar.style.width = pct + '%'; }
+            if (countSpan) countSpan.textContent = `${state.current + 1} / ${state.total}`;
+            const prevBtn = container.querySelector('.btn-nav.prev');
+            const nextBtn = container.querySelector('.btn-nav.next');
+            if (prevBtn) prevBtn.disabled = state.current === 0;
+            if (nextBtn) nextBtn.disabled = state.current === state.total - 1;
+        }
+        function goToSlide(partId, containerId, index) {
+            const state = slideState[partId];
+            if (!state) return;
+            if (index < 0) index = 0;
+            if (index >= state.total) index = state.total - 1;
+            state.current = index;
+            renderSlide(partId, containerId);
+        }
+
+        function createSlideHTML(title, cardsHTML) {
+            return `<div class="slide"><h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:12px; border-right:3px solid var(--primary); padding-right:10px;">${title}</h3><div class="cards-grid">${cardsHTML}</div></div>`;
+        }
+        function card(title, items, arTitle = '', hasTranslate = true) {
+            const cardId = 'c' + Math.random().toString(36).substr(2, 8);
+            const itemsHTML = items.map((item) => {
+                const en = item.en || item;
+                const ar = item.ar || '';
+                return `<li><span class="item-en">${en}</span><span class="item-ar">${ar}</span></li>`;
+            }).join('');
+            const listClass = items.some(i => i.en && i.en.match(/^\d/)) ? 'card-items numbered' : 'card-items simple';
+            const translateBtn = hasTranslate ? `<button class="translate-btn" data-card="${cardId}" onclick="toggleCardTranslation('${cardId}')">📖 ترجمة</button>` : '';
+            return `<div class="topic-card" data-card="${cardId}"><div class="card-header"><span class="card-title"><span class="card-title-en">${title}</span><span class="card-title-ar" id="${cardId}-title-ar">${arTitle}</span></span>${translateBtn}</div><ul class="${listClass}">${itemsHTML}</ul></div>`;
+        }
+        function cardWithItems(title, items, arTitle = '') {
+            const formatted = items.map(item => { if (typeof item === 'string') return { en: item, ar: '' }; return item; });
+            return card(title, formatted, arTitle, true);
+        }
+        function tableCard(title, tableHTML, arTitle = '') {
+            const cardId = 'tc' + Math.random().toString(36).substr(2, 8);
+            return `<div class="topic-card full-width" data-card="${cardId}"><div class="card-header"><span class="card-title"><span class="card-title-en">${title}</span><span class="card-title-ar" id="${cardId}-title-ar">${arTitle}</span></span></div><div class="info-table-wrap">${tableHTML}</div></div>`;
+        }
+        function cell(en, ar) { return `<span class="en-text">${en}</span><span class="ar-text">${ar}</span>`; }
+        function toggleCardTranslation(cardId) {
+            const card = document.querySelector(`.topic-card[data-card="${cardId}"]`);
+            if (!card) return;
+            const arItems = card.querySelectorAll('.item-ar');
+            const titleAr = document.getElementById(`${cardId}-title-ar`);
+            const titleEn = card.querySelector('.card-title-en');
+            const btn = card.querySelector('.translate-btn');
+            const isVisible = arItems.length > 0 && arItems[0].classList.contains('show');
+            arItems.forEach(el => el.classList.toggle('show'));
+            if (titleAr) { titleAr.classList.toggle('show'); if (titleEn) titleEn.classList.toggle('hidden'); }
+            if (btn) { btn.textContent = isVisible ? '📖 ترجمة' : '✕ إخفاء'; btn.classList.toggle('active'); }
+        }
+
+        // ================================================================
+        //  SPEECH SYNTHESIS (TEXT TO SPEECH)
+        // ================================================================
+        function speakText(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; 
+            utterance.rate = 0.9; 
+            utterance.pitch = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function addSpeechListeners() {
+            document.querySelectorAll('.item-en').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    let textToSpeak = this.innerText || this.textContent;
+                    textToSpeak = textToSpeak.replace(/\n/g, ' ').trim();
+                    if (textToSpeak) {
+                        speakText(textToSpeak);
+                    }
+                });
+            });
+        }
+
+        // ================================================================
+        //  DATA — المحتوى الكامل (خطوات مختصرة وسهلة الحفظ)
+        // ================================================================
+        const slidesData = {
+            // ========== 1. Body Mechanics ==========
+            body_mechanics: {
+                titleEn: 'Body Mechanics',
+                titleAr: 'ميكانيكا الجسم',
+                slides: [
+                    {
+                        title: '1. Definition & Preparation',
+                        cards: [
+                            cardWithItems('Definition:', [
+                                { en: 'Using alignment, posture & balance to perform activities (lifting, bending, moving).', ar: 'استخدام المحاذاة والوضعية والتوازن لأداء الأنشطة (الرفع، الانحناء، التحرك).' }
+                            ], 'التعريف:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Prevent nurse injury (musculoskeletal).', ar: '١. منع إصابة الممرض (العضلي الهيكلي).' },
+                                { en: '2. Prevent patient injury during transfer.', ar: '٢. منع إصابة المريض أثناء النقل.' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Preparation (Patient Assessment):', [
+                                { en: '1. Evaluate patient weight.', ar: '١. تقييم وزن المريض.' },
+                                { en: '2. Assess patient position & height.', ar: '٢. تقييم وضع وطول المريض.' },
+                                { en: '3. Assess balance & weight-bearing ability.', ar: '٣. تقييم التوازن والقدرة على تحمل الوزن.' },
+                                { en: '4. Assess knowledge about body alignment.', ar: '٤. تقييم المعرفة بمحاذاة الجسم.' }
+                            ], 'التحضير (تقييم المريض):')
+                        ]
+                    },
+                    {
+                        title: '2. Procedure Steps (1-6)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                { en: '1. Lock wheels. <br><i>Why: Prevents unexpected movement/injury.</i>', ar: '١. اقفل العجلات. <br><i>السبب: يمنع الحركة غير المتوقعة/الإصابة.</i>' },
+                                { en: '2. Let patient assist. <br><i>Why: Less resistance, independence, exercise.</i>', ar: '٢. اسمح للمريض بالمساعدة. <br><i>السبب: مقاومة أقل، استقلالية، تمرين.</i>' },
+                                { en: '3. Use aids (lifters/boards) or extra staff. <br><i>Why: Less stress & injury risk.</i>', ar: '٣. استخدم أدوات (رفعات/ألواح) أو طاقم إضافي. <br><i>السبب: إجهاد أقل وخطر إصابة أقل.</i>' },
+                                { en: '4. Slide/push/pull — don\'t lift & carry. <br><i>Why: Body weight balances patient.</i>', ar: '٤. دحرج/ادفع/اسحب — لا ترفع وتحمل. <br><i>السبب: وزن الجسم يوازن المريض.</i>' },
+                                { en: '5. Tighten abdominal & gluteal muscles. <br><i>Why: Supports abdomen, stabilizes pelvis.</i>', ar: '٥. شد عضلات البطن والألوية. <br><i>السبب: يدعم البطن، يستقر الحوض.</i>' },
+                                { en: '6. Use smooth, rhythmic motions. <br><i>Why: Less energy, less strain.</i>', ar: '٦. استخدم حركات سلسة وإيقاعية. <br><i>السبب: طاقة أقل، إجهاد أقل.</i>' }
+                            ], 'خطوات الإجراء:')
+                        ]
+                    },
+                    {
+                        title: '3. Procedure Steps (7-12)',
+                        cards: [
+                            cardWithItems('Steps of Procedure (Continued):', [
+                                { en: '7. Plan movement with assistant first. <br><i>Why: Prevents uncoordinated movement.</i>', ar: '٧. خطط للحركة مع المساعد أولاً. <br><i>السبب: يمنع الحركة غير المنسقة.</i>' },
+                                { en: '8. Face patient, pivot whole body (no twisting). <br><i>Why: Avoids back strain.</i>', ar: '٨. واجه المريض، أدر جسمك بالكامل (لا تلوِ ظهرك). <br><i>السبب: يتجنب إجهاد الظهر.</i>' },
+                                { en: '9. Feet flat, knees bent, one foot forward. <br><i>Why: Wider base, more stability.</i>', ar: '٩. قدمان مسطحتان، ركبتان مثنيتان، قدم للأمام. <br><i>السبب: قاعدة أوسع، ثبات أكثر.</i>' },
+                                { en: '10. Bend knees (lower center of gravity). <br><i>Why: Balance, larger muscles work.</i>', ar: '١٠. اثنِ الركبتين (اخفض مركز الثقل). <br><i>السبب: توازن، عضلات أكبر تعمل.</i>' },
+                                { en: '11. Bed at waist level, lower side rails. <br><i>Why: No stretching/straining.</i>', ar: '١١. السرير عند مستوى الخصر، اخفض الحواجز. <br><i>السبب: لا تمدد/إجهاد.</i>' },
+                                { en: '12. Carry objects close to body. <br><i>Why: Workload near center of gravity.</i>', ar: '١٢. احمل الأشياء قرب الجسم. <br><i>السبب: الحمل قرب مركز الثقل.</i>' }
+                            ], 'خطوات الإجراء (تابع):')
+                        ]
+                    }
+                ]
+            },
+            // ========== 2. Asepsis & Infection Control ==========
+            asepsis: {
+                titleEn: 'Asepsis & Infection',
+                titleAr: 'العقامة ومكافحة العدوى',
+                slides: [
+                    {
+                        title: '1. Medical vs Surgical Asepsis',
+                        cards: [
+                            cardWithItems('Medical Asepsis:', [
+                                { en: 'Confine microorganisms to one area — limit number, growth, spread.', ar: 'حصر الكائنات الدقيقة في منطقة واحدة — الحد من العدد والنمو والانتشار.' },
+                                { en: '<span class="highlight-text">Clean</span>: almost no microorganisms.', ar: '<span class="highlight-text">نظيف</span>: لا كائنات دقيقة تقريبًا.' },
+                                { en: '<span class="highlight-text">Dirty (soiled)</span>: microorganisms present.', ar: '<span class="highlight-text">ملوث</span>: كائنات دقيقة موجودة.' }
+                            ], 'العقامة الطبية:'),
+                            cardWithItems('Surgical Asepsis:', [
+                                { en: 'Keep area/object free from ALL microorganisms.', ar: 'الحفاظ على المنطقة/الشيء خاليًا من جميع الكائنات الدقيقة.' }
+                            ], 'العقامة الجراحية:')
+                        ]
+                    },
+                    {
+                        title: '2. Hand Washing - Definition & Purposes',
+                        cards: [
+                            cardWithItems('Definition:', [
+                                { en: 'Vigorous rubbing of all hand surfaces with soap/cleanser.', ar: 'فرك قوي لجميع أسطح اليدين بالصابون/منظف.' }
+                            ], 'التعريف:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Clean hands.', ar: '١. تنظيف اليدين.' },
+                                { en: '2. Break infection chain (patient↔nurse).', ar: '٢. كسر سلسلة العدوى (مريض↔ممرض).' }
+                            ], 'الأهداف:'),
+                            cardWithItems('When — Before:', [
+                                { en: 'Invasive procedures.', ar: 'الإجراءات الغازية.' },
+                                { en: 'Caring for susceptible patients.', ar: 'رعاية المرضى المعرضين للخطر.' },
+                                { en: 'Handling wounds.', ar: 'التعامل مع الجروح.' },
+                                { en: 'Serving food.', ar: 'تقديم الطعام.' }
+                            ], 'متى — قبل:'),
+                            cardWithItems('When — After:', [
+                                { en: 'Handling wounds.', ar: 'التعامل مع الجروح.' },
+                                { en: 'Handling contaminated items.', ar: 'التعامل مع العناصر الملوثة.' },
+                                { en: 'Using bathroom.', ar: 'استخدام الحمام.' }
+                            ], 'متى — بعد:')
+                        ]
+                    },
+                    {
+                        title: '3. Hand Washing - Equipment & Precautions',
+                        cards: [
+                            cardWithItems('Equipment:', [
+                                { en: 'Sink with elbow or foot-operated taps.', ar: 'حوض بمقابض تعمل بالكوع أو القدم.' },
+                                { en: 'Liquid soap for hand washing.', ar: 'صابون سائل لغسل اليدين.' },
+                                { en: 'Towels (paper towels).', ar: 'مناشف (مناشف ورقية).' },
+                                { en: 'Waste disposal bin operated by a foot pedal.', ar: 'سلة نفايات تعمل بدواسة القدم.' }
+                            ], 'الأدوات والمعدات:'),
+                            cardWithItems('Precautions taken during hand washing:', [
+                                { en: 'Cut nails to avoid dirt and microorganisms.', ar: 'قص الأظافر لتجنب الأوساخ والكائنات الدقيقة.' },
+                                { en: 'Remove watch and jewelry.', ar: 'خلع الساعة والمجوهرات.' },
+                                { en: 'Wash from the hand to the elbow.', ar: 'يكون الغسيل من اليد باتجاه الكوع.' },
+                                { en: 'Securely cover any breaks in your own skin with a waterproof dressing.', ar: 'تغطية أي جروح في جلدك بضمادة مقاومة للماء بشكل آمن.' }
+                            ], 'الاحتياطات المتخذة أثناء غسل اليدين:')
+                        ]
+                    },
+                    {
+                        title: '4. Hand Washing - Steps (1-11)',
+                        cards: [
+                            cardWithItems('Steps to wash hands:', [
+                                { en: '1. Water your hands.', ar: '١. بلل يديك بالماء.' },
+                                { en: '2. Put soap and apply.', ar: '٢. ضع الصابون ووزعه.' },
+                                { en: '3. Scrub your hands palm to palm.', ar: '٣. افرُك يديك (راحة اليد مقابل راحة اليد).' },
+                                { en: '4. Palm to back of hand.', ar: '٤. راحة اليد على ظهر اليد الأخرى.' },
+                                { en: '5. Scrub between fingers.', ar: '٥. تخليل ما بين الأصابع.' },
+                                { en: '6. Back of fingers to palm.', ar: '٦. ظهر الأصابع في راحة اليد.' },
+                                { en: '7. Clean your thumb.', ar: '٧. تنظيف الإبهام.' },
+                                { en: '8. Scrub fingernails, fingertips, and wrist.', ar: '٨. افرُك الأظافر وأطراف الأصابع والمعصم.' },
+                                { en: '9. Rinse from hand to elbow.', ar: '٩. الشطف بالماء من اليد إلى الكوع.' },
+                                { en: '10. Dry hands with paper towel.', ar: '١٠. تجفيف اليدين بمنشفة ورقية.' },
+                                { en: '11. Turn off sink with paper towel.', ar: '١١. إغلاق الصنبور باستخدام المنشفة الورقية.' }
+                            ], 'خطوات غسل اليدين:')
+                        ]
+                    },
+                    {
+                        title: '5. Alcohol-Based Hand Rub',
+                        cards: [
+                            cardWithItems('Introduction:', [
+                                { en: 'CDC-recommended. Kills microbes fast (15-20 sec), less irritation. 60%-95% alcohol.', ar: 'موصى به من CDC. يقتل الميكروبات بسرعة (١٥-٢٠ ثانية)، تهيج أقل. ٦٠٪-٩٥٪ كحول.' }
+                            ], 'مقدمة:'),
+                            cardWithItems('Purposes:', [
+                                { en: 'Before/after patient contact.', ar: 'قبل/بعد الاتصال بالمريض.' },
+                                { en: 'Before gloves / after removal.', ar: 'قبل القفازات / بعد خلعها.' },
+                                { en: 'After touching medical equipment.', ar: 'بعد لمس المعدات الطبية.' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Steps:', [
+                                { en: '1. Inspect hands (if soiled → soap & water).', ar: '١. افحص اليدين (إذا ملوثة → صابون وماء).' },
+                                { en: '2. Remove rings/watch.', ar: '٢. أزل الخواتم/الساعة.' },
+                                { en: '3. Ample product in palm.', ar: '٣. كمية وافرة في الراحة.' },
+                                { en: '4. Rub all surfaces up to ½ inch above wrist.', ar: '٤. افرك كل الأسطح حتى ½ بوصة فوق الرسغ.' },
+                                { en: '5. Rub until dry (15-30 sec).', ar: '٥. افرك حتى الجفاف (١٥-٣٠ ثانية).' },
+                                { en: '6. Oil-free lotion if desired.', ar: '٦. لوسيون خالٍ من الزيوت إن رغبت.' }
+                            ], 'الخطوات:')
+                        ]
+                    }
+                ]
+            },
+            // ========== 3. Blood Glucose ==========
+            blood_glucose: {
+                titleEn: 'Blood Glucose',
+                titleAr: 'سكر الدم',
+                slides: [
+                    {
+                        title: '1. Definition, Purposes & Equipment',
+                        cards: [
+                            cardWithItems('Definition:', [
+                                { en: 'Capillary blood drop (finger prick) on test strip → glucose meter reading.', ar: 'قطرة دم شعري (وخز الإصبع) على شريط اختبار → قراءة جهاز الجلوكوز.' }
+                            ], 'التعريف:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Monitor glucose (hyper/hypoglycemia risk).', ar: '١. مراقبة الجلوكوز (خطر ارتفاع/انخفاض السكر).' },
+                                { en: '2. Promote patient glucose regulation.', ar: '٢. تعزيز تنظيم المريض للجلوكوز.' },
+                                { en: '3. Evaluate insulin effectiveness.', ar: '٣. تقييم فعالية الأنسولين.' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Equipment:', [
+                                { en: 'Glucose meter, lancet, test strips, cotton/gauze, alcohol swab, clean gloves, biohazard bag, sharps container.', ar: 'جهاز جلوكوز، مِشرط (إبرة وخز)، شرائط اختبار، قطن/شاش، مسحة كحول، قفازات نظيفة، كيس مخلفات حيوية، حاوية أدوات حادة.' }
+                            ], 'المعدات:')
+                        ]
+                    },
+                    {
+                        title: '2. Procedure Steps (1-6)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                { en: '1. Check the patient\'s sheet (medical file).', ar: '١. تحقق من ورقة المريض (الملف الطبي).' },
+                                { en: '2. Gather equipment and wash hands.', ar: '٢. جهّز الأدوات واغسل اليدين.' },
+                                { en: '3. Wear gloves.', ar: '٣. ارتدِ القفازات.' },
+                                { en: '4. Introduce myself to the patient and explain the procedure to the patient.', ar: '٤. أعرف نفسي للمريض وأشرح الإجراء للمريض.' },
+                                { en: '5. Maintain body mechanics (proper posture).', ar: '٥. حافظ على ميكانيكا الجسم (الوضعية السليمة).' },
+                                { en: '6. Assess and choose the blood site.', ar: '٦. تقييم واختيار المكان الذي ستؤخذ منه عينة الدم.' }
+                            ], 'خطوات الإجراء:')
+                        ]
+                    },
+                    {
+                        title: '3. Procedure Steps (7-12)',
+                        cards: [
+                            cardWithItems('Steps of Procedure (Continued):', [
+                                { en: '7. Lower the patient\'s arm and massage the area to stimulate blood flow.', ar: '٧. أنزل يد المريض وعمل مساج للمنطقة لزيادة تدفق الدم.' },
+                                { en: '8. Clean the area with water, soap, and alcohol.', ar: '٨. نظّف المنطقة بالماء والصابون والكحول.' },
+                                { en: '9. Uncover the lancet and turn on the device.', ar: '٩. اكشف إبرة الوخز وشغّل الجهاز.' },
+                                { en: '10. Don\'t squeeze the puncture site.', ar: '١٠. لا تضغط على مكان الوخز.' },
+                                { en: '11. Put the lancet on the site and activate it (prick).', ar: '١١. ضع جهاز الوخز على المكان ونشّطه (الشك).' },
+                                { en: '12. Wipe the first blood drop (it could be contaminated with soap or alcohol).', ar: '١٢. امسح أول قطرة دم تخرج لأنها قد تكون ملوثة بالصابون أو الكحول.' }
+                            ], 'خطوات الإجراء (تابع):')
+                        ]
+                    },
+                    {
+                        title: '4. Procedure Steps (13-18)',
+                        cards: [
+                            cardWithItems('Steps of Procedure (Continued):', [
+                                { en: '13. Put a sufficient amount of blood on the testing strip.', ar: '١٣. ضع كمية كافية من الدم على شريط الاختبار.' },
+                                { en: '14. Apply pressure on the area for 15-30 seconds with cotton.', ar: '١٤. استمر بالضغط على المنطقة لمدة 15 إلى 30 ثانية بقطن.' },
+                                { en: '15. Read the blood glucose result and turn off the device.', ar: '١٥. اقرأ نتيجة سكر الدم وأوقف تشغيل الجهاز.' },
+                                { en: '16. Discard used equipment in the designated container.', ar: '١٦. تخلص من الأدوات المستخدمة في الحاوية المخصصة.' },
+                                { en: '17. Remove gloves and wash hands.', ar: '١٧. اخلع القفازات واغسل اليدين.' },
+                                { en: '18. Documentation: glucose level, site, and time. Notify the doctor if abnormal.', ar: '١٨. التوثيق: مستوى السكر، المكان، والوقت. وإبلاغ الطبيب في حال وجود نتيجة غير طبيعية.' }
+                            ], 'خطوات الإجراء (تابع):')
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // ================================================================
+        //  BUILD SECTIONS
+        // ================================================================
+        const sectionOrder = ['body_mechanics', 'asepsis', 'blood_glucose'];
+
+        function renderSlideContent(slide) {
+            if (slide.cards && Array.isArray(slide.cards)) {
+                const cardsHTML = slide.cards.join('');
+                return createSlideHTML(slide.title, cardsHTML);
+            }
+            return createSlideHTML(slide.title, '');
+        }
+
+        function buildApp() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            const sectionsContainer = document.getElementById('sectionsContainer');
+
+            sectionOrder.forEach((secId, idx) => {
+                const sec = slidesData[secId];
+                if (!sec) return;
+
+                const tab = document.createElement('button');
+                tab.className = 'tab-btn' + (idx === 0 ? ' active' : '');
+                tab.dataset.idx = idx;
+                tab.innerHTML = `<span class="en">${sec.titleEn}</span><span class="ar">${sec.titleAr}</span>`;
+                tab.onclick = () => switchSection(idx);
+                tabsContainer.appendChild(tab);
+
+                const card = document.createElement('div');
+                card.className = 'card' + (idx === 0 ? ' active' : '');
+                card.dataset.idx = idx;
+                card.id = `section-${secId}`;
+
+                const slidesHTML = sec.slides.map(s => renderSlideContent(s)).join('');
+                const totalSlides = sec.slides.length;
+
+                const cardHTML = `
+                        <h2><i class="fas fa-layer-group"></i> ${sec.titleEn} · ${sec.titleAr}</h2>
+                        <div class="slide-container" id="slideContainer-${secId}">
+                            <div class="slide-progress">
+                                <span style="font-weight:600;">التقدم</span>
+                                <div class="bar"><div class="fill" style="width:0%;"></div></div>
+                                <span class="count">1 / ${totalSlides}</span>
+                            </div>
+                            ${slidesHTML}
+                            <div class="slide-nav">
+                                <button class="btn-nav prev" onclick="goToSlide('${secId}', 'slideContainer-${secId}', slideState['${secId}'].current - 1)">السابق</button>
+                                <button class="btn-nav next primary" onclick="goToSlide('${secId}', 'slideContainer-${secId}', slideState['${secId}'].current + 1)">التالي</button>
+                            </div>
+                        </div>
+                    `;
+                card.innerHTML = cardHTML;
+                sectionsContainer.appendChild(card);
+
+                initSlideState(secId, totalSlides);
+                setTimeout(() => renderSlide(secId, `slideContainer-${secId}`), 50);
+            });
+        }
+
+        function switchSection(idx) {
+            const secId = sectionOrder[idx];
+            document.querySelectorAll('.tab-btn').forEach((tab, i) => tab.classList.toggle('active', i === idx));
+            document.querySelectorAll('.card').forEach((card, i) => card.classList.toggle('active', i === idx));
+            if (secId && slideState[secId]) {
+                slideState[secId].current = 0;
+                setTimeout(() => renderSlide(secId, `slideContainer-${secId}`), 50);
+            }
+        }
+
+        // ===== INIT =====
+        applyTheme(localStorage.getItem('theme') || 'dark');
+        buildApp();
+        
+        setTimeout(addSpeechListeners, 500);
+
+        window.goToSlide = goToSlide;
+        window.slideState = slideState;
+        window.switchSection = switchSection;
+        window.toggleTheme = toggleTheme;
+        window.toggleCardTranslation = toggleCardTranslation;
+        window.speakText = speakText;
+    </script>
+</body>
+</html>
