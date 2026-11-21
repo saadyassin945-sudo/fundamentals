@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Fundamentals of Nursing</title>
+    <style>
+        :root {
+            --bg1: #0a0e1a; --bg2: #141e33; --primary: #00d4ff; --primary-dark: #0099cc;
+            --accent: #facc15; --danger: #f87171; --success: #34d399;
+            --card-bg: rgba(255, 255, 255, 0.04); --card-border: rgba(255, 255, 255, 0.08);
+            --text: #e8edf5; --muted: #94a3b8;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); --glow: 0 0 30px rgba(0, 212, 255, 0.06);
+            --radius: 16px; --header-bg: rgba(255, 255, 255, 0.03); --header-border: rgba(255, 255, 255, 0.04);
+            --footer-border: rgba(255, 255, 255, 0.03); --table-header-bg: rgba(0, 212, 255, 0.08);
+            --card-title-bg: rgba(0, 212, 255, 0.06); --highlight-bg: #facc15; --highlight-text: #0f172a;
+        }
+        [data-theme="light"] {
+            --bg1: #f0f4f8; --bg2: #e2e8f0; --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.1); --text: #0f172a; --muted: #475569;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08); --glow: 0 0 30px rgba(0, 212, 255, 0.02);
+            --header-bg: rgba(255, 255, 255, 0.7); --header-border: rgba(0, 0, 0, 0.04);
+            --footer-border: rgba(0, 0, 0, 0.04); --table-header-bg: rgba(0, 212, 255, 0.12);
+            --card-title-bg: rgba(0, 212, 255, 0.08);
+        }
+        .highlight-text { background-color: var(--highlight-bg); color: var(--highlight-text); padding: 0 4px; border-radius: 4px; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--bg1), var(--bg2), #0f1a2b);
+            min-height: 100vh; color: var(--text); padding: 16px 8px;
+            display: flex; justify-content: center; align-items: flex-start;
+            transition: background 0.4s ease;
+        }
+        .app { max-width: 1100px; width: 100%; }
+        .header { text-align: center; margin-bottom: 20px; padding: 16px 16px; background: var(--header-bg); border-radius: 20px; border: 1px solid var(--header-border); backdrop-filter: blur(4px); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: #fff; text-shadow: 0 4px 25px rgba(0, 212, 255, 0.15); transition: color 0.3s ease; }
+        [data-theme="light"] .header h1 { color: #0f172a; text-shadow: none; }
+        .header h1 .highlight { background: linear-gradient(135deg, var(--primary), #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header .sub { color: var(--primary); font-weight: 600; letter-spacing: 1.5px; font-size: 0.8rem; margin-top: 2px; }
+        .header .creator { color: var(--muted); font-size: 0.75rem; margin-top: 4px; }
+        .header .creator .name { color: var(--text); font-weight: 700; }
+        .theme-toggle { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 50%; width: 42px; height: 42px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; color: var(--text); }
+        .theme-toggle:hover { border-color: var(--primary); background: rgba(0, 212, 255, 0.08); transform: scale(1.05); }
+        [data-theme="light"] .theme-toggle { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.06); }
+        .tabs-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; justify-content: center; }
+        .tab-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 10px 16px; font-size: 0.7rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s ease; text-align: center; line-height: 1.3; min-width: 140px; }
+        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
+        .tab-btn.active { border-color: var(--primary); background: rgba(0, 212, 255, 0.08); color: var(--primary); }
+        .tab-btn .en { display: block; font-size: 0.75rem; font-weight: 800; color: var(--text); }
+        .tab-btn.active .en { color: var(--primary); }
+        .tab-btn .en-sub { display: block; font-size: 0.65rem; font-weight: 600; color: var(--primary); margin-top: 3px; }
+        .tab-btn .ar { display: block; font-size: 0.55rem; opacity: 0.75; margin-top: 4px; }
+        .tab-btn .ar-sub { display: block; font-size: 0.5rem; opacity: 0.55; }
+        .card { background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--card-border); border-radius: var(--radius); box-shadow: var(--shadow), var(--glow); padding: 18px 14px; margin-bottom: 16px; transition: background 0.3s ease, border 0.3s ease; display: none; }
+        .card.active { display: block; }
+        .card h2 { font-size: 1.3rem; color: var(--text); border-right: 4px solid var(--primary); padding-right: 12px; margin-bottom: 16px; font-weight: 700; line-height: 1.4; }
+        .card h2 .lec-num { display: block; font-size: 1.35rem; color: var(--text); font-weight: 800; }
+        .card h2 .lec-title-en { display: block; font-size: 1rem; color: var(--primary); font-weight: 600; margin-top: 4px; }
+        .card h2 .lec-num-ar { display: block; font-size: 0.85rem; color: var(--muted); font-weight: 500; margin-top: 6px; }
+        .card h2 .lec-title-ar { display: block; font-size: 0.78rem; color: var(--muted); opacity: 0.85; }
+        .slide-container { position: relative; min-height: 300px; }
+        .slide { display: none; animation: fadeSlide 0.3s ease; }
+        .slide.active { display: block; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .slide-progress { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.8rem; color: var(--muted); }
+        .slide-progress .bar { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.06); border-radius: 10px; margin: 0 12px; overflow: hidden; }
+        .slide-progress .bar .fill { height: 100%; background: linear-gradient(90deg, var(--primary), #818cf8); border-radius: 10px; transition: width 0.3s ease; }
+        .slide-progress .count { font-weight: 600; white-space: nowrap; }
+        .slide-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 10px; }
+        .slide-nav .btn-nav { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; padding: 10px 20px; font-size: 0.9rem; font-weight: 600; color: var(--text); cursor: pointer; transition: all 0.2s ease; min-width: 80px; text-align: center; }
+        .slide-nav .btn-nav:hover:not(:disabled) { background: rgba(0, 212, 255, 0.08); border-color: var(--primary); }
+        .slide-nav .btn-nav:disabled { opacity: 0.3; cursor: default; }
+        .slide-nav .btn-nav.primary { background: var(--primary); color: #0a0e1a; border-color: var(--primary); }
+        .slide-nav .btn-nav.primary:hover:not(:disabled) { background: var(--primary-dark); border-color: var(--primary-dark); }
+        [data-theme="light"] .slide-nav .btn-nav { background: rgba(0, 0, 0, 0.02); border-color: rgba(0, 0, 0, 0.06); }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 8px; }
+        .topic-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px 14px 12px; transition: border-color 0.2s ease; display: flex; flex-direction: column; }
+        .topic-card:hover { border-color: var(--primary); }
+        .topic-card .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--card-title-bg); }
+        .topic-card .card-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); line-height: 1.4; flex: 1; }
+        .topic-card .card-title-ar { color: var(--muted); font-weight: 400; display: none; }
+        .topic-card .card-title-ar.show { display: inline; }
+        .topic-card .card-title-en { display: inline; }
+        .topic-card .card-title-en.hidden { display: none; }
+        .topic-card .translate-btn { background: rgba(0, 212, 255, 0.08); border: 1px solid var(--card-border); border-radius: 20px; padding: 3px 12px; font-size: 0.6rem; color: var(--primary); cursor: pointer; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; margin-right: 8px; }
+        .topic-card .translate-btn:hover { background: rgba(0, 212, 255, 0.18); border-color: var(--primary); }
+        .topic-card .translate-btn.active { background: rgba(0, 212, 255, 0.18); border-color: var(--primary); }
+        .topic-card .card-items { list-style: none; padding: 0; margin: 0; flex: 1; }
+        .topic-card .card-items li { padding: 4px 0; line-height: 1.6; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        [data-theme="light"] .topic-card .card-items li { border-bottom-color: rgba(0, 0, 0, 0.04); }
+        .topic-card .card-items li:last-child { border-bottom: none; }
+        .topic-card .item-en {
+            font-weight: 600; color: var(--text); font-size: 0.9rem; line-height: 1.6;
+            display: block; text-align: left; direction: ltr;
+            cursor: pointer; transition: color 0.2s ease, background 0.2s ease;
+            border-radius: 4px; padding: 1px 3px; margin-left: -3px;
+        }
+        .topic-card .item-en:hover { color: var(--primary); background: rgba(0, 212, 255, 0.06); }
+        .topic-card .item-en.speaking { color: var(--primary); background: rgba(0, 212, 255, 0.12); }
+        .topic-card .item-ar { color: var(--muted); font-size: 0.82rem; line-height: 1.6; text-align: right; direction: rtl; display: none; margin-top: 2px; padding-right: 8px; border-right: 2px solid rgba(0, 212, 255, 0.2); }
+        .topic-card .item-ar.show { display: block; }
+        .topic-card .card-items.numbered { counter-reset: item-counter; }
+        .topic-card .card-items.numbered li { padding-right: 28px; position: relative; counter-increment: item-counter; }
+        .topic-card .card-items.numbered li::before { content: counter(item-counter) "-"; position: absolute; right: 2px; color: var(--primary); font-weight: 700; font-size: 0.85rem; }
+        .rationale-label { color: var(--accent); font-weight: 700; }
+        [data-theme="light"] .rationale-label { color: #b45309; }
+        .info-table-wrap { overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--card-border); grid-column: 1 / -1; }
+        .info-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 500px; }
+        .info-table th { background: var(--table-header-bg); color: var(--primary); padding: 8px 6px; text-align: center; border-bottom: 2px solid var(--primary); font-weight: 700; }
+        .info-table td { padding: 8px 6px; border-bottom: 1px solid var(--card-border); vertical-align: top; line-height: 1.5; }
+        .info-table tr:last-child td { border-bottom: none; }
+        .info-table .ar-text { border-right: none; padding-right: 0; margin-top: 2px; font-size: 0.78rem; display: block; color: var(--muted); }
+        .info-table .en-text {
+            font-size: 0.85rem; cursor: pointer; transition: color 0.2s ease, background 0.2s ease;
+            border-radius: 4px; padding: 1px 3px; margin-left: -3px; display: inline-block;
+            text-align: left; direction: ltr;
+        }
+        .info-table .en-text:hover { color: var(--primary); background: rgba(0, 212, 255, 0.06); }
+        .info-table .en-text.speaking { color: var(--primary); background: rgba(0, 212, 255, 0.12); }
+        @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } .info-table { font-size: 0.72rem; min-width: 350px; } .topic-card .card-title { font-size: 0.85rem; } }
+        .footer-credit { text-align: center; color: rgba(255, 255, 255, 0.12); font-size: 0.7rem; margin-top: 24px; padding: 10px 0; border-top: 1px solid var(--footer-border); }
+        [data-theme="light"] .footer-credit { color: rgba(0, 0, 0, 0.2); }
+        .footer-credit .name { color: var(--primary); font-weight: 600; }
+        @media (max-width: 768px) { body { padding: 8px 4px; } .header h1 { font-size: 1.4rem; } .tab-btn { padding: 8px 10px; font-size: 0.6rem; min-width: 110px; } .card { padding: 14px 10px; } .card h2 { font-size: 1.1rem; } }
+        .topic-card.full-width { grid-column: 1 / -1; }
+
+        /* PDF BUTTON */
+        .pdf-btn {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--danger);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .pdf-btn:hover {
+            background: rgba(248, 113, 113, 0.2);
+            border-color: var(--danger);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1><span class="highlight">Fundamentals of Nursing</span></h1>
+                    <div class="sub">أساسيات التمريض</div>
+                    <div class="creator">Created by <span class="name">MR. YASSIN THARWAT</span></div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع">☀</button>
+            </div>
+        </div>
+        <div class="tabs-wrap" id="tabsContainer"></div>
+        <div id="sectionsContainer"></div>
+        <div class="footer-credit">Created by <span class="name">MR. YASSIN THARWAT</span></div>
+    </div>
+
+    <script>
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('themeToggle').textContent = theme === 'light' ? '☾' : '☀';
+            localStorage.setItem('theme', theme);
+            currentTheme = theme;
+        }
+        function toggleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+
+        let slideState = {};
+        function initSlideState(partId, totalSlides) { slideState[partId] = { current: 0, total: totalSlides }; }
+        function renderSlide(partId, containerId) {
+            const state = slideState[partId];
+            if (!state) return;
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const slides = container.querySelectorAll('.slide');
+            slides.forEach((s, i) => s.classList.toggle('active', i === state.current));
+            const progressBar = container.querySelector('.slide-progress .fill');
+            const countSpan = container.querySelector('.slide-progress .count');
+            if (progressBar) progressBar.style.width = ((state.current + 1) / state.total * 100) + '%';
+            if (countSpan) countSpan.textContent = `${state.current + 1} / ${state.total}`;
+            const prevBtn = container.querySelector('.btn-nav.prev');
+            const nextBtn = container.querySelector('.btn-nav.next');
+            if (prevBtn) prevBtn.disabled = state.current === 0;
+            if (nextBtn) nextBtn.disabled = state.current === state.total - 1;
+        }
+        function goToSlide(partId, containerId, index) {
+            const state = slideState[partId];
+            if (!state) return;
+            if (index < 0) index = 0;
+            if (index >= state.total) index = state.total - 1;
+            state.current = index;
+            renderSlide(partId, containerId);
+        }
+
+        function stripHTML(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        function createSlideHTML(title, cardsHTML) {
+            return `<div class="slide"><h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:12px; border-right:3px solid var(--primary); padding-right:10px;">${title}</h3><div class="cards-grid">${cardsHTML}</div></div>`;
+        }
+
+        function card(title, items, arTitle = '', hasTranslate = true, fullWidth = false) {
+            const cardId = 'c' + Math.random().toString(36).substr(2, 8);
+            const itemsHTML = items.map((item) => {
+                const en = item.en || item;
+                const ar = item.ar || '';
+                return `<li><span class="item-en" data-text="${stripHTML(en).replace(/"/g, '&quot;')}">${en}</span><span class="item-ar">${ar}</span></li>`;
+            }).join('');
+            const listClass = items.some(i => i.en && i.en.match(/^\d/)) ? 'card-items numbered' : 'card-items simple';
+            const translateBtn = hasTranslate ? `<button class="translate-btn" data-card="${cardId}" onclick="toggleCardTranslation('${cardId}')">ترجمة</button>` : '';
+            const widthClass = fullWidth ? ' full-width' : '';
+            return `<div class="topic-card${widthClass}" data-card="${cardId}"><div class="card-header"><span class="card-title"><span class="card-title-en">${title}</span><span class="card-title-ar" id="${cardId}-title-ar">${arTitle}</span></span>${translateBtn}</div><ul class="${listClass}">${itemsHTML}</ul></div>`;
+        }
+
+        function cardWithItems(title, items, arTitle = '', fullWidth = false) {
+            const formatted = items.map(item => { if (typeof item === 'string') return { en: item, ar: '' }; return item; });
+            return card(title, formatted, arTitle, true, fullWidth);
+        }
+
+        function stepItem(stepEn, rationaleEn, stepAr, rationaleAr) {
+            const en = rationaleEn
+                ? `${stepEn}<br><span class="rationale-label">Rationale:</span> ${rationaleEn}`
+                : stepEn;
+            const ar = rationaleAr
+                ? `${stepAr}<br><strong style="color:var(--primary);">التعليل (Rationale):</strong> ${rationaleAr}`
+                : stepAr;
+            return { en, ar };
+        }
+
+        function tableCard(title, tableHTML, arTitle = '') {
+            return `<div class="topic-card full-width"><div class="card-header"><span class="card-title"><span class="card-title-en">${title}</span><span class="card-title-ar" style="display:block;">${arTitle}</span></span></div><div class="info-table-wrap">${tableHTML}</div></div>`;
+        }
+
+        function cell(en, ar) {
+            return `<span class="en-text" data-text="${stripHTML(en).replace(/"/g, '&quot;')}">${en}</span><span class="ar-text">${ar}</span>`;
+        }
+
+        function toggleCardTranslation(cardId) {
+            const card = document.querySelector(`.topic-card[data-card="${cardId}"]`);
+            if (!card) return;
+            const arItems = card.querySelectorAll('.item-ar');
+            const titleAr = document.getElementById(`${cardId}-title-ar`);
+            const titleEn = card.querySelector('.card-title-en');
+            const btn = card.querySelector('.translate-btn');
+            const isVisible = arItems.length > 0 && arItems[0].classList.contains('show');
+            arItems.forEach(el => el.classList.toggle('show'));
+            if (titleAr) { titleAr.classList.toggle('show'); if (titleEn) titleEn.classList.toggle('hidden'); }
+            if (btn) { btn.textContent = isVisible ? 'ترجمة' : 'إخفاء'; btn.classList.toggle('active'); }
+        }
+
+        /* ============================================================
+           TTS - النطق بالضغط على النص الإنجليزي
+        ============================================================ */
+        function initTTS() {
+            if (!window.speechSynthesis) return;
+            if (window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.onvoiceschanged = function() {};
+            }
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('.item-en, .en-text');
+                if (!target) return;
+                if (e.target.closest('.translate-btn')) return;
+                const text = (target.getAttribute('data-text') || target.textContent || '').trim();
+                if (!text) return;
+                speakText(text, target);
+            });
+        }
+
+        function speakText(text, element) {
+            const synth = window.speechSynthesis;
+            if (!synth) return;
+            synth.cancel();
+            document.querySelectorAll('.speaking').forEach(el => el.classList.remove('speaking'));
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            const voices = synth.getVoices();
+            const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google'))
+                || voices.find(v => v.lang.startsWith('en-US'))
+                || voices.find(v => v.lang.startsWith('en'));
+            if (englishVoice) utterance.voice = englishVoice;
+            utterance.onstart = () => { if (element) element.classList.add('speaking'); };
+            utterance.onend = () => { if (element) element.classList.remove('speaking'); };
+            utterance.onerror = () => { if (element) element.classList.remove('speaking'); };
+            synth.speak(utterance);
+        }
+
+        /* ============================================================
+           PDF DOWNLOAD
+        ============================================================ */
+        function downloadPDF(sectionId) {
+            const sec = slidesData[sectionId];
+            if (!sec) return;
+
+            let allSlidesHTML = '';
+            sec.slides.forEach((slide) => {
+                let cardsHTML = '';
+                if (slide.cards) {
+                    slide.cards.forEach(c => { cardsHTML += c; });
+                }
+                allSlidesHTML += `
+                    <div class="pdf-slide">
+                        <div class="pdf-slide-header">
+                            <h2>${slide.title}</h2>
+                        </div>
+                        <div class="pdf-cards">${cardsHTML}</div>
+                    </div>
+                `;
+            });
+
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert('يرجى السماح بالنوافذ المنبثقة لتحميل PDF');
+                return;
+            }
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${sec.titleEn} — ${sec.titleNameEn}</title>
+                    <style>
+                        @page { margin: 12mm 10mm; size: A4; }
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        html, body {
+                            -webkit-print-color-adjust: exact;
+                            print-color-adjust: exact;
+                        }
+                        body {
+                            font-family: 'Segoe UI', Tahoma, sans-serif;
+                            font-size: 13px;
+                            color: #111;
+                            line-height: 1.55;
+                            orphans: 2;
+                            widows: 2;
+                        }
+                        .pdf-subject-header {
+                            text-align: center;
+                            border-bottom: 3px solid #0099cc;
+                            padding-bottom: 10px;
+                            margin-bottom: 14px;
+                        }
+                        .pdf-subject-header h1 {
+                            font-size: 26px;
+                            color: #0099cc;
+                            font-weight: 800;
+                            letter-spacing: 2px;
+                        }
+                        .pdf-lec-num {
+                            font-size: 16px;
+                            color: #0077aa;
+                            font-weight: 700;
+                            margin-top: 8px;
+                        }
+                        .pdf-lec-title {
+                            font-size: 14px;
+                            color: #0f172a;
+                            font-weight: 600;
+                            margin-top: 2px;
+                        }
+                        .pdf-lec-num-ar {
+                            font-size: 12px;
+                            color: #555;
+                            margin-top: 6px;
+                        }
+                        .pdf-lec-title-ar {
+                            font-size: 11px;
+                            color: #777;
+                        }
+                        .pdf-subject-header .creator {
+                            font-size: 11px;
+                            color: #888;
+                            margin-top: 6px;
+                        }
+                        .pdf-slide {
+                            margin-bottom: 14px;
+                            padding: 0;
+                            page-break-inside: auto;
+                            break-inside: auto;
+                        }
+                        .pdf-slide-header {
+                            margin-bottom: 8px;
+                            padding-bottom: 5px;
+                            border-bottom: 2.5px solid #0099cc;
+                            page-break-after: avoid;
+                            break-after: avoid;
+                        }
+                        .pdf-slide-header h2 {
+                            font-size: 16px;
+                            color: #0077aa;
+                            font-weight: 700;
+                            line-height: 1.35;
+                        }
+                        .pdf-cards { display: block; }
+                        .pdf-cards .topic-card {
+                            display: block;
+                            border: 1.5px solid #e0e0e0;
+                            border-radius: 6px;
+                            padding: 8px 10px;
+                            background: #ffffff;
+                            margin-bottom: 8px;
+                            page-break-inside: auto;
+                            break-inside: auto;
+                        }
+                        .pdf-cards .card-header {
+                            border-bottom: 2px solid #0099cc;
+                            padding-bottom: 4px;
+                            margin-bottom: 6px;
+                            page-break-after: avoid;
+                            break-after: avoid;
+                        }
+                        .pdf-cards .card-title {
+                            font-size: 13.5px;
+                            font-weight: 700;
+                            color: #0077aa;
+                            line-height: 1.35;
+                        }
+                        .pdf-cards .card-title-ar {
+                            font-size: 12px;
+                            color: #555;
+                            font-weight: 400;
+                            display: block;
+                            margin-top: 2px;
+                        }
+                        .pdf-cards .card-title-en { display: block; }
+                        .pdf-cards .translate-btn { display: none; }
+                        .pdf-cards ul { list-style: none; padding: 0; margin: 0; }
+                        .pdf-cards li {
+                            padding: 4px 0;
+                            border-bottom: 1px dotted #e5e5e5;
+                            font-size: 12.5px;
+                            line-height: 1.5;
+                            page-break-inside: avoid;
+                            break-inside: avoid;
+                        }
+                        .pdf-cards li:last-child { border-bottom: none; }
+                        .pdf-cards .item-en {
+                            font-weight: 600;
+                            display: block;
+                            text-align: left;
+                            direction: ltr;
+                            font-size: 12.5px;
+                            color: #111;
+                        }
+                        .pdf-cards .item-ar {
+                            display: block;
+                            color: #555;
+                            font-size: 12px;
+                            text-align: right;
+                            direction: rtl;
+                            padding-right: 6px;
+                            border-right: 3px solid #cce;
+                            margin-top: 3px;
+                            line-height: 1.5;
+                        }
+                        .pdf-cards .rationale-label { color: #b45309; font-weight: 700; }
+                        .pdf-cards .highlight-text {
+                            background: #facc15;
+                            color: #0f172a;
+                            padding: 0 3px;
+                            border-radius: 3px;
+                        }
+                        .pdf-cards .numbered { counter-reset: item-counter; }
+                        .pdf-cards .numbered li {
+                            padding-right: 22px;
+                            position: relative;
+                            counter-increment: item-counter;
+                        }
+                        .pdf-cards .numbered li::before {
+                            content: counter(item-counter) "-";
+                            position: absolute;
+                            right: 0;
+                            color: #0099cc;
+                            font-weight: 700;
+                            font-size: 12.5px;
+                        }
+                        .info-table-wrap {
+                            margin: 8px 0;
+                            border: 1px solid #ccc;
+                            border-radius: 6px;
+                            overflow: visible;
+                            page-break-inside: auto;
+                            break-inside: auto;
+                        }
+                        .info-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 12px;
+                            page-break-inside: auto;
+                        }
+                        .info-table thead { display: table-header-group; }
+                        .info-table tr {
+                            page-break-inside: avoid;
+                            break-inside: avoid;
+                        }
+                        .info-table th {
+                            background: #e6f4fa;
+                            color: #0077aa;
+                            padding: 5px 4px;
+                            text-align: center;
+                            border-bottom: 2px solid #0099cc;
+                            font-weight: 700;
+                        }
+                        .info-table td {
+                            padding: 5px 4px;
+                            border-bottom: 1px solid #e0e0e0;
+                            vertical-align: top;
+                            line-height: 1.45;
+                        }
+                        .info-table tr:last-child td { border-bottom: none; }
+                        .info-table .ar-text {
+                            display: block;
+                            margin-top: 2px;
+                            font-size: 11.5px;
+                            color: #666;
+                        }
+                        .info-table .en-text {
+                            font-size: 12px;
+                            display: inline-block;
+                            text-align: left;
+                            direction: ltr;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="pdf-subject-header">
+                        <h1>CLINICAL FUNDAMENTAL OF NURSING</h1>
+                        <div class="pdf-lec-num">${sec.titleEn}</div>
+                        <div class="pdf-lec-title">${sec.titleNameEn}</div>
+                        <div class="pdf-lec-num-ar">${sec.titleAr}</div>
+                        <div class="pdf-lec-title-ar">${sec.titleNameAr}</div>
+                        <div class="creator">Created by MR. YASSIN THARWAT</div>
+                    </div>
+                    ${allSlidesHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.focus();
+                printWindow.print();
+            }, 600);
+        }
+
+        // ============================================================
+        //  DATA (100% FROM PDF FILES)
+        // ============================================================
+        const slidesData = {
+            // ========== UNIT I: BODY MECHANICS ==========
+            body_mechanics: {
+                titleEn: 'Unit I: Body Mechanics',
+                titleAr: 'الوحدة الأولى: ميكانيكا الجسم',
+                titleNameEn: 'Alignment, Posture, Balance, Lifting & Moving',
+                titleNameAr: 'المحاذاة، الوضعية، التوازن، الرفع والتحريك',
+                slides: [
+                    {
+                        title: '1. Objectives, Definition, Purposes & Preparation',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define body mechanics.', ar: '١. تعريف ميكانيكا الجسم.' },
+                                { en: '2. Mention the purposes of body mechanics.', ar: '٢. ذكر أهداف ميكانيكا الجسم.' },
+                                { en: '3. Prepare the patient before procedure.', ar: '٣. تحضير المريض قبل الإجراء.' },
+                                { en: '4. Demonstrate the techniques of body mechanics correctly and accurately.', ar: '٤. تطبيق تقنيات ميكانيكا الجسم بشكل صحيح ودقيق.' }
+                            ], 'الأهداف الأدائية (سيتمكن الطالب من):'),
+                            cardWithItems('Definition:', [
+                                { en: 'Using alignment, posture, and balance in a coordinated effort to perform activities such as lifting, bending and moving.', ar: 'استخدام المحاذاة والوضعية والتوازن في جهد منسق لأداء أنشطة مثل الرفع والانحناء والحركة.' }
+                            ], 'التعريف:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Prevent injury to the nurse\'s musculoskeletal system.', ar: '١. منع إصابة الجهاز العضلي الهيكلي للممرض.' },
+                                { en: '2. Prevent injury to the patient during transfer.', ar: '٢. منع إصابة المريض أثناء النقل.' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Evaluate weight of patient to be lifted.', ar: '١. تقييم وزن المريض المراد رفعه.' },
+                                { en: '2. Assess position and height of patient to be lifted.', ar: '٢. تقييم وضع وطول المريض المراد رفعه.' },
+                                { en: '3. Assess patient\'s balance and ability to bear weight.', ar: '٣. تقييم توازن المريض وقدرته على تحمل الوزن.' },
+                                { en: '4. Assess patient\'s knowledge about body alignment and how to maintain it with position changes.', ar: '٤. تقييم معرفة المريض بمحاذاة الجسم وكيفية الحفاظ عليها مع تغير الوضعيات.' }
+                            ], 'التحضير:')
+                        ]
+                    },
+                    {
+                        title: '2. Steps of Procedure & Rationales (1–12)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Always lock wheels on bed, stretcher, or wheelchair.', 'Unexpected movements may move bed, stretcher, or wheelchair and result in injury to yourself or patient.', '١. اقفل دائمًا عجلات السرير أو النقالة أو الكرسي المتحرك.', 'الحركات غير المتوقعة قد تحرك السرير أو النقالة أو الكرسي المتحرك وتسبب إصابة لك أو للمريض.'),
+                                stepItem('2. Allow patient to assist during move.', 'Patient participation helps overcome forces resisting the move, encourages patient\'s sense of independence, and provides exercise for patient.', '٢. اسمح للمريض بالمساعدة أثناء التحريك.', 'مشاركة المريض تساعد في التغلب على القوى المقاومة للحركة، وتعزز شعور المريض بالاستقلالية، وتوفر تمرينًا له.'),
+                                stepItem('3. Use mechanical aids (e.g., lifters or slide boards) or additional personnel to move heavy patients.', 'Having assistance decreases stress of movement for patient and nurse thus reducing risk of injury.', '٣. استخدم الوسائل الميكانيكية (مثل الرافعات أو ألواح الانزلاق) أو طاقمًا إضافيًا لتحريك المرضى ذوي الوزن الثقيل.', 'وجود المساعدة يقلل من إجهاد الحركة على المريض والممرض وبالتالي يقلل خطر الإصابة.'),
+                                stepItem('4. When possible, slide, push, or pull patient rather than lifting and carrying.', 'Rocking your own body weight can balance the patient\'s weight when assisting to a standing position.', '٤. عند الإمكان، حرك المريض بالانزلاق أو الدفع أو السحب بدلاً من الرفع والحمل.', 'تأرجح وزن جسمك يمكن أن يوازن وزن المريض عند المساعدة في الوقوف.'),
+                                stepItem('5. Tighten abdominal and gluteal muscles before lifting or moving patient.', 'Tightening supports the abdomen and stabilizes the pelvis to provide a firm base of support.', '٥. شد عضلات البطن والألوية قبل رفع أو تحريك المريض.', 'الشد يدعم البطن ويثبت الحوض لتوفير قاعدة ارتكاز قوية.'),
+                                stepItem('6. Use smooth, rhythmic, coordinated motions.', 'Smooth motions use less energy and lead to less muscle strain than jerky motions.', '٦. استخدم حركات سلسة وإيقاعية ومنسقة.', 'الحركات السلسة تستهلك طاقة أقل وتؤدي إلى إجهاد عضلي أقل من الحركات المفاجئة.'),
+                                stepItem('7. If another person is assisting, plan your movement before beginning.', 'Planning prevents uncoordinated movements that may result in muscle strain or injury.', '٧. إذا كان هناك شخص آخر يساعدك، خطط للحركة قبل البدء.', 'التخطيط يمنع الحركات غير المنسقة التي قد تؤدي إلى شد عضلي أو إصابة.'),
+                                stepItem('8. Face patient to be moved, and plan to pivot your entire body without twisting your back.', 'To avoid back strain and injury.', '٨. واجه المريض المراد تحريكه، وخطط لتدوير جسمك بالكامل دون التواء الظهر.', 'لتجنب إجهاد وإصابة الظهر.'),
+                                stepItem('9. Place both feet flat on floor; bend knees slightly with one foot slightly in front of the other or one step apart.', 'Balanced positioning increases base of support and stability.', '٩. ضع كلتا القدمين مسطحتين على الأرض؛ اثنِ الركبتين قليلاً مع وضع قدم أمام الأخرى قليلاً أو بمسافة خطوة.', 'الوضعية المتوازنة تزيد من قاعدة الارتكاز والاستقرار.'),
+                                stepItem('10. Bend knees to lower center of gravity toward patient.', 'This maintains body balance, reduces risk of falling and allows larger muscle groups to work together.', '١٠. اثنِ الركبتين لخفض مركز الثقل باتجاه المريض.', 'هذا يحافظ على توازن الجسم، ويقلل خطر السقوط، ويسمح لمجموعات العضلات الكبيرة بالعمل معًا.'),
+                                stepItem('11. Elevate beds to waist level & lower side rails.', 'Adjusting the bed and side rails prevents stretching and muscle strain.', '١١. ارفع السرير إلى مستوى الخصر واخفض الحواجز الجانبية.', 'ضبط السرير والحواجز الجانبية يمنع التمدد الزائد والإجهاد العضلي.'),
+                                stepItem('12. Carry objects close to body, and stand as close as possible to work area.', 'To maintain the workload near center of gravity to prevent muscle strain and fatigue caused by hyperextension.', '١٢. احمل الأشياء قريبًا من الجسم، وقف أقرب ما يمكن إلى منطقة العمل.', 'للحفاظ على الحمل قريبًا من مركز الثقل ومنع الإجهاد العضلي والتعب الناتج عن فرط التمدد.')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    }
+                ]
+            },
+
+            // ========== UNIT II: ASEPSIS AND INFECTION CONTROL ==========
+            asepsis: {
+                titleEn: 'Unit II: Asepsis & Infection Control',
+                titleAr: 'الوحدة الثانية: العقامة ومكافحة العدوى',
+                titleNameEn: 'Hand Hygiene, Face Mask, Sterile Gown & Sterile Gloves',
+                titleNameAr: 'نظافة اليدين، الكمامة، العباءة المعقمة والقفازات المعقمة',
+                slides: [
+                    {
+                        title: '1. Objectives, Asepsis & Sepsis',
+                        cards: [
+                            cardWithItems('Performance Objectives (At the end of this lecture, the student will be able to):', [
+                                { en: '1. Performing hand hygiene using soap and water.', ar: '١. إجراء نظافة اليدين باستخدام الماء والصابون.' },
+                                { en: '2. Performing hand hygiene using an alcohol-based handrub.', ar: '٢. إجراء نظافة اليدين باستخدام فرك اليدين الكحولي.' },
+                                { en: '3. Donning and removing face mask.', ar: '٣. ارتداء وخلع الكمامة.' },
+                                { en: '4. Donning and removing gown.', ar: '٤. ارتداء وخلع العباءة.' },
+                                { en: '5. Donning and removing gloves.', ar: '٥. ارتداء وخلع القفازات.' }
+                            ], 'الأهداف الأدائية (بنهاية المحاضرة سيتمكن الطالب من):'),
+                            cardWithItems('Definitions:', [
+                                { en: '<span class="highlight-text">Asepsis:</span> The freedom from disease causing microorganisms.', ar: '<span class="highlight-text">العقامة (Asepsis):</span> الخلو من الكائنات الدقيقة المسببة للأمراض.' },
+                                { en: '<span class="highlight-text">Sepsis:</span> The presence of pathogenic organisms or their toxin in the blood or body tissue.', ar: '<span class="highlight-text">الإنتان (Sepsis):</span> وجود كائنات ممرضة أو سمومها في الدم أو أنسجة الجسم.' }
+                            ], 'التعريفات:'),
+                            cardWithItems('Types of Asepsis:', [
+                                { en: '1. <span class="highlight-text">Medical asepsis:</span> All practices intended to confine specific microorganisms to a specific area, limiting the number, growth, and spread of microorganisms.', ar: '١. <span class="highlight-text">العقامة الطبية:</span> جميع الممارسات التي تهدف لحصر كائنات دقيقة معينة في منطقة محددة، والحد من عددها ونموها وانتشارها.' },
+                                { en: '&nbsp;&nbsp;&nbsp;a. <span class="highlight-text">Clean:</span> Absence of almost all microorganisms.', ar: 'أ. <span class="highlight-text">نظيف:</span> غياب جميع الكائنات الدقيقة تقريبًا.' },
+                                { en: '&nbsp;&nbsp;&nbsp;b. <span class="highlight-text">Dirty (soiled, contaminated):</span> The presence of microorganisms.', ar: 'ب. <span class="highlight-text">متسخ (ملوث):</span> وجود الكائنات الدقيقة.' },
+                                { en: '2. <span class="highlight-text">Surgical asepsis (sterile technique):</span> Refers to those practices that keep an area or object free from all microorganisms.', ar: '٢. <span class="highlight-text">العقامة الجراحية (التقنية المعقمة):</span> تشير إلى الممارسات التي تحافظ على منطقة أو شيء خاليًا من جميع الكائنات الدقيقة.' }
+                            ], 'أنواع العقامة:')
+                        ]
+                    },
+                    {
+                        title: '2. Hand Washing (Soap & Water) — Definition, Purposes, Time, Prep & Equipment',
+                        cards: [
+                            cardWithItems('Definition & Purposes:', [
+                                { en: '<span class="highlight-text">Definition:</span> Hand washing is a vigorous rubbing together of all surfaces of the hands using soap or other cleansing agent.', ar: '<span class="highlight-text">التعريف:</span> غسل اليدين هو فرك قوي لجميع أسطح اليدين معًا باستخدام الصابون أو عامل منظف آخر.' },
+                                { en: '1. <span class="highlight-text">Purpose:</span> To clean hands.', ar: '١. <span class="highlight-text">الهدف:</span> تنظيف اليدين.' },
+                                { en: '2. <span class="highlight-text">Purpose:</span> To break the chain of infection from patient to patient, patient to nurse, nurse to patient.', ar: '٢. <span class="highlight-text">الهدف:</span> كسر سلسلة العدوى من مريض لمريض، ومن مريض لممرض، ومن ممرض لمريض.' }
+                            ], 'التعريف والأهداف:'),
+                            cardWithItems('Time for Hand Washing (Before & After):', [
+                                { en: '<strong>1. Before:</strong><br>- Invasive procedures.<br>- Caring for susceptible individuals such as newborns and immune-compromised patients.<br>- Handling wounds.<br>- Serving or consuming food.', ar: '<strong>١. قبل:</strong><br>- الإجراءات الغازية.<br>- رعاية الأفراد المعرضين للخطر مثل حديثي الولادة ومرضى نقص المناعة.<br>- التعامل مع الجروح.<br>- تقديم أو تناول الطعام.' },
+                                { en: '<strong>2. After:</strong><br>- Handling wounds.<br>- Handling contaminated items such as bed pans or wet linens.<br>- Using the bathroom.', ar: '<strong>٢. بعد:</strong><br>- التعامل مع الجروح.<br>- التعامل مع المواد الملوثة مثل قصرية السرير أو المفروشات المبللة.<br>- استخدام الحمام.' }
+                            ], 'أوقات غسل اليدين (قبل وبعد):'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Assess the environment to establish if facilities are adequate for cleansing the hands. Is the water clean? Is soap available? Is there a clean towel to dry hands?', ar: '١. قيّم البيئة للتأكد من كفاية المرافق لتنظيف اليدين (هل الماء نظيف؟ هل الصابون متوفر؟ هل توجد منشفة نظيفة لتجفيف اليدين؟).' },
+                                { en: '2. Assess the hands to determine if they have open cuts, hangnails, broken skin, or heavily soiled area.', ar: '٢. افحص اليدين لتحديد وجود جروح مفتوحة أو زوائد جلدية أو تشقق بالجلد أو منطقة شديدة التلوث.' },
+                                { en: '3. Gather the necessary supplies.', ar: '٣. جهّز المستلزمات اللازمة.' }
+                            ], 'التحضير:'),
+                            cardWithItems('Equipment and Supplies:', [
+                                { en: '1. Liquid antibacterial soap.', ar: '١. صابون سائل مضاد للبكتيريا.' },
+                                { en: '2. Nailbrush or orange stick.', ar: '٢. فرشاة أظافر أو عود خشبي لتنظيف الأظافر.' },
+                                { en: '3. Paper towels.', ar: '٣. مناشف ورقية.' },
+                                { en: '4. Warm running water.', ar: '٤. ماء جارٍ دافئ.' },
+                                { en: '5. Regular waste container.', ar: '٥. حاوية نفايات عادية.' }
+                            ], 'المعدات والمستلزمات:')
+                        ]
+                    },
+                    {
+                        title: '3. Hand Washing (Soap & Water) — Steps of Procedure (1–13)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Stand in front of the sink. Do not allow your clothing to touch the sink during the washing procedure.', 'The sink is considered contaminated. Clothing may carry organisms from place to place.', '١. قف أمام الحوض. لا تسمح لملابسك بملامسة الحوض أثناء الغسيل.', 'يُعتبر الحوض ملوثًا، وقد تنقل الملابس الكائنات الدقيقة من مكان لآخر.'),
+                                stepItem('2. Remove jewelry and secure in a safe place.', 'Removal of jewelry facilitates proper cleansing. Microorganisms may accumulate in settings of jewelry.', '٢. اخلع المجوهرات واحفظها في مكان آمن.', 'خلع المجوهرات يسهل التنظيف السليم، إذ قد تتراكم الكائنات الدقيقة في ثنايا المجوهرات.'),
+                                stepItem('3. Turn on water and adjust force. Regulate the temperature until the temperature is warm.', 'Water splashed from the contaminated sink will contaminate clothing. Warm water is more comfortable and is less likely to open pores and remove oils from the skin.', '٣. افتح الماء واضبط قوة التدفق. نظّم الحرارة حتى يصبح الماء دافئًا.', 'الماء المتناثر من الحوض الملوث يلوث الملابس. الماء الدافئ أكثر راحة وأقل تسببًا في فتح المسام وإزالة زيوت الجلد.'),
+                                stepItem('4. Wet the hands and wrists area. Keep hands lower than the elbows to allow water to flow toward fingertips.', 'Water should flow from the cleaner area to the more contaminated area; hands are more contaminated than forearms.', '٤. بلل منطقة اليدين والمعصمين. أبقِ اليدين أخفض من الكوعين ليسمح ذلك بتدفق الماء نحو أطراف الأصابع.', 'يجب أن يتدفق الماء من المنطقة الأنظف إلى الأكثر تلوثًا؛ فالأيدي أكثر تلوثًا من الساعدين.'),
+                                stepItem('5. Use about 1 teaspoon of liquid soap from dispenser or rinse bar of soap and lather thoroughly. Cover all areas of hands with soap product. Rinse soap bar again and return to soap rack without touching the rack.', 'Rinsing the soap before and after use removes the lather, which may contain microorganisms.', '٥. استخدم حوالي ملعقة صغيرة من الصابون السائل أو اشطف قطعة الصابون واصنع رغوة جيدة تغطي جميع مناطق اليدين، ثم اشطف قطعة الصابون وأعدها لحاملها دون لمس الحامل.', 'شطف الصابون قبل وبعد الاستخدام يزيل الرغوة التي قد تحتوي على كائنات دقيقة.'),
+                                stepItem('6. With firm rubbing and circular motions, wash the palms and backs of the hands, each finger, the areas between the fingers, and the knuckles, wrists and forearms:<br>a. Hands palm to palm.<br>b. Palm to back with finger interlaced and with palm of other hand.<br>c. Palm to palm with finger interlaced.<br>d. Rub with back of fingers to opposing palm then rub thumb.<br>f. Tip of fingers in circular motion.<br>g. Each wrist with opposite hand.', '', '٦. بفرك قوي وحركات دائرية، اغسل راحتي اليدين وظهريهما وكل إصبع وما بين الأصابع والمفاصل والمعصمين والساعدين بالطريقة التالية:<br>أ. راحة اليد مقابل راحة اليد.<br>ب. راحة اليد على ظهر اليد الأخرى مع تشبيك الأصابع.<br>ج. راحة اليد مقابل راحة اليد مع تشبيك الأصابع.<br>د. فرك ظهر الأصابع مقابل راحة اليد الأخرى ثم فرك الإبهام.<br>و. أطراف الأصابع بحركة دائرية.<br>ز. كل معصم باليد المقابلة.', ''),
+                                stepItem('7. Wash at least 1 inch above area of contamination. If hands are not visibly soiled, wash to 1 inch above the wrists.', 'Friction caused by firm rubbing & circular motions helps to loosen dirt & organisms that can lodge between the fingers. Cleaning less contaminated areas after hands prevent spreading microorganism.', '٧. اغسل لمسافة لا تقل عن ١ بوصة فوق منطقة التلوث. وإذا لم تكن اليدان متسختين بشكل مرئي، اغسل إلى ١ بوصة فوق المعصمين.', 'الاحتكاك الناتج عن الفرك القوي والحركات الدائرية يساعد في تفكيك الأوساخ والكائنات العالقة بين الأصابع، وتنظيف المناطق الأقل تلوثًا بعد اليدين يمنع انتشار الكائنات الدقيقة.'),
+                                stepItem('8. Continue this friction motion for at least 20 seconds.', 'Length of hand washing is determined by degree of contamination. Hands that are visibly soiled need a longer scrub.', '٨. استمر في حركة الاحتكاك هذه لمدة لا تقل عن ٢٠ ثانية.', 'تحدد مدة غسل اليدين بدرجة التلوث؛ فالأيدي المتسخة بشكل مرئي تحتاج لفرك أطول.'),
+                                stepItem('9. Use fingernails of the opposite hand or use the orangewood stick to clean under finger nails.', 'Area under nails has a high microorganism count, and organisms may remain under the nails, where they can grow and spread to other persons.', '٩. استخدم أظافر اليد المقابلة أو العود الخشبي لتنظيف ما تحت الأظافر.', 'تحتوي المنطقة تحت الأظافر على عدد كبير من الكائنات الدقيقة التي قد تبقى وتنمو وتنتقل لآخرين.'),
+                                stepItem('10. Rinse thoroughly with water flowing toward fingertips.', 'Running water rinses microorganisms and dirt into the sink.', '١٠. اشطف جيدًا مع تدفق الماء نحو أطراف الأصابع.', 'الماء الجاري يشطف الكائنات الدقيقة والأوساخ إلى داخل الحوض.'),
+                                stepItem('11. Pat hands dry with a paper towel, beginning with the fingers and moving upward toward forearms, and discard the paper towel.', 'Patting the skin dry prevents chapping. Dry hands first because they are considered the cleanest and less contaminated area.', '١١. جفف اليدين بالتربيت بمنشفة ورقية بدءًا من الأصابع وصعودًا نحو الساعدين، ثم تخلص من المنشفة.', 'التربيت يمنع تشقق الجلد. وتُجفف اليدان أولاً لأنهما تُعدان المنطقة الأنظف والأقل تلوثًا.'),
+                                stepItem('12. Use another clean towel to turn off the faucet. Discard the paper towel immediately without touching other clean hand.', 'Turning off the faucet with a clean paper towel protects clean hands from recontamination.', '١٢. استخدم منشفة ورقية نظيفة أخرى لإغلاق الصنبور وتخلص منها فورًا دون لمس اليد النظيفة الأخرى.', 'إغلاق الصنبور بمنشفة نظيفة يحمي اليدين النظيفتين من إعادة التلوث.'),
+                                stepItem('13. Use oil-free lotion on hands if desired.', 'Oil-free lotion helps to keep the skin soft and prevents chapping.', '١٣. استخدم لوسيون خالٍ من الزيوت على اليدين إذا رغبت.', 'اللوسيون الخالي من الزيوت يحافظ على نعومة الجلد ويمنع التشقق.')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+                    {
+                        title: '4. Alcohol-Based Hand Rub',
+                        cards: [
+                            cardWithItems('Introduction & Equipment:', [
+                                { en: '<strong>Introduction:</strong> The Center for Disease Control and Prevention (CDC) recommends the use of alcohol-based hand rubs by all healthcare providers during patient care. These rubs significantly reduce the number of microorganisms on the skin, are fast acting (e.g., 15 to 20 seconds), and cause less skin irritation than regular hand washing techniques. When hands are not visibly soiled, recommends the use of an alcohol-based handrub for hand asepsis. Acceptable hand rubs are preparations containing 60% to 95% alcohol.', ar: '<strong>مقدمة:</strong> يوصي مركز مكافحة الأمراض والوقاية منها (CDC) باستخدام مطهرات اليدين الكحولية من قِبل جميع مقدمي الرعاية الصحية أثناء رعاية المرضى. تقلل هذه المطهرات بشكل كبير عدد الكائنات الدقيقة، وتعمل بسرعة (١٥ إلى ٢٠ ثانية)، وتسبب تهيجًا أقل للجلد من الغسل العادي. عندما لا تكون اليدان متسختين بشكل مرئي، يُوصى بها لتطهير اليدين، وتحتوي المستحضرات المقبولة على ٦٠٪ إلى ٩٥٪ كحول.' },
+                                { en: '<strong>Equipment and Supplies:</strong> Alcohol-based hand rub containing 60% to 95% ethanol or isopropanol (gel, foam, or lotion).', ar: '<strong>المعدات والمستلزمات:</strong> مطهر يدين كحولي يحتوي على ٦٠٪ إلى ٩٥٪ إيثانول أو أيزوبروبانول (جل، رغوة، أو لوسيون).' }
+                            ], 'المقدمة والمعدات:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Before and after patient contact.', ar: '١. قبل وبعد ملامسة المريض.' },
+                                { en: '2. Before applying gloves and after removing gloves.', ar: '٢. قبل ارتداء القفازات وبعد خلعها.' },
+                                { en: '3. After removal of gloves when minimal contact with body fluids or excretions, mucous membranes, wounds, and dressings has occurred.', ar: '٣. بعد خلع القفازات عند حدوث تلامس طفيف مع سوائل الجسم أو الإفرازات أو الأغشية المخاطية أو الجروح والضمادات.' },
+                                { en: '4. After contact with medical equipment used during patient care.', ar: '٤. بعد ملامسة المعدات الطبية المستخدمة أثناء رعاية المريض.' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Visibly inspect hands for obvious contaminants or debris.', 'When hands are visibly dirty, contaminated with proteinaceous material, or visibly soiled with blood or other body fluids, they must be washed with either a non-antibacterial soap and water or an antibacterial soap and water.', '١. افحص اليدين بصريًا للكشف عن أي ملوثات أو أوساخ ظاهرة.', 'عندما تكون اليدان متسختين بشكل مرئي أو ملوثتين بمواد بروتينية أو بالدم أو سوائل الجسم، يجب غسلهما بالماء والصابون (العادي أو المضاد للبكتيريا).'),
+                                stepItem('2. Remove rings and watch or push watch up on the forearm so the wrist is clear of any jewelry.', 'The wearing of jewelry increases the number of microorganisms on the hands. Moving the watch up on the forearm provides complete access to fingers, hands, and wrists.', '٢. اخلع الخواتم والساعة أو ادفع الساعة لأعلى الساعد ليكون المعصم خاليًا من أي مجوهرات.', 'ارتداء المجوهرات يزيد عدد الكائنات الدقيقة على اليدين، ودفع الساعة لأعلى الساعد يتيح الوصول الكامل للأصابع واليدين والمعصمين.'),
+                                stepItem('3. When decontaminating hands with an alcohol-based hand rub, dispense an ample amount of the product into the palm of one hand. Follow the manufacturer\'s recommendations regarding the amount of product to use.', '', '٣. عند تطهير اليدين بالكحول، ضع كمية وافرة من المنتج في راحة إحدى اليدين واتبع توصيات الشركة المصنعة بشأن الكمية.', ''),
+                                stepItem('4. Rub the hands together covering all surfaces of hands and fingers, up to 1/2 inch above the wrist.', '', '٤. افرك اليدين معًا لتغطية جميع أسطح اليدين والأصابع حتى ١/٢ بوصة فوق المعصم.', ''),
+                                stepItem('5. Rub hands together until hands are dry, approximately 15 to 30 seconds.', '', '٥. افرك اليدين معًا حتى تجفا، لمدة ١٥ إلى ٣٠ ثانية تقريبًا.', ''),
+                                stepItem('6. Use oil-free lotion on hands if desired.', 'Oil-free lotion helps to keep the skin soft and prevents chapping.', '٦. استخدم لوسيون خالٍ من الزيوت على اليدين إذا رغبت.', 'اللوسيون الخالي من الزيوت يحافظ على نعومة الجلد ويمنع التشقق.')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+                    {
+                        title: '5. Donning and Removing Face Mask',
+                        cards: [
+                            cardWithItems('Definition, Purposes & Equipment:', [
+                                { en: '<span class="highlight-text">Definition:</span> Masks are worn when dealing closely with the infected patients, by all persons entering an infected room.', ar: '<span class="highlight-text">التعريف:</span> تُرتدى الكمامات عند التعامل عن قرب مع المرضى المصابين بالعدوى، من قِبل جميع الأشخاص الذين يدخلون غرفة العزل.' },
+                                { en: '1. <span class="highlight-text">Purpose:</span> To reduce the risk for transmission of organisms by the droplet contact and airborne routes, and by splatters of body substances.', ar: '١. <span class="highlight-text">الهدف:</span> تقليل خطر انتقال الكائنات الدقيقة عبر الرذاذ والهواء وتناثر سوائل الجسم.' },
+                                { en: '<strong>Equipment:</strong> Disposable mask.', ar: '<strong>المعدات:</strong> كمامة تُستخدم لمرة واحدة.' }
+                            ], 'التعريف والأهداف والمعدات:'),
+                            cardWithItems('Steps of Procedure (Donning & Removing):', [
+                                stepItem('1. Locate the top edge of the mask. The mask usually has a narrow metal strip along the edge.', '', '١. حدد الحافة العلوية للكمامة، وعادةً ما تحتوي على شريط معدني ضيق على طول الحافة.', ''),
+                                stepItem('2. Hold the mask by the top strings or loops.', '', '٢. امسك الكمامة من الأربطة أو الحلقات العلوية.', ''),
+                                stepItem('3. [A-Donning] Place the upper edge of the mask over the bridge of the nose and tie the upper ties at the back of the head or secure the loops around the ears. If glasses are worn, fit the upper edge of the mask under the glasses.', 'With the edge of the mask under the glasses, clouding of the glasses is less likely to occur.', '٣. [أ- الارتداء] ضع الحافة العلوية للكمامة فوق جسر الأنف واربط الأربطة العلوية خلف الرأس أو ثبّت الحلقات حول الأذنين. وإذا كنت ترتدي نظارة، ضع الحافة العلوية تحت النظارة.', 'وضع حافة الكمامة تحت النظارة يقلل من احتمالية تكون الضباب على النظارة.'),
+                                stepItem('4. Secure the lower edge of the mask under the chin, and tie the lower tie at the nape of the neck.', 'To be effective, a mask must cover both the nose and the mouth, because air moves in and out of both.', '٤. ثبّت الحافة السفلية للكمامة تحت الذقن واربط الرباط السفلي عند مؤخرة الرقبة.', 'لكي تكون الكمامة فعالة يجب أن تغطي الأنف والفم معًا لأن الهواء يدخل ويخرج من كليهما.'),
+                                stepItem('5. If the mask has a metal strip, adjust this firmly over the bridge of the nose.', 'A secure fit prevents both the escape and the inhalation of microorganisms around the edges of the mask and fogging of eyeglasses.', '٥. إذا كانت الكمامة تحتوي على شريط معدني، اضبطه بإحكام فوق جسر الأنف.', 'الإحكام الجيد يمنع تسرب أو استنشاق الكائنات الدقيقة حول حواف الكمامة ويمنع تغبيش النظارات.'),
+                                stepItem('6. Wear the mask only once, and do not wear any mask longer than the manufacturer recommends or once become wet.', 'Because it became ineffective when moist.', '٦. ارتدِ الكمامة مرة واحدة فقط، ولا ترتدِها لمدة أطول من توصية الشركة المصنعة أو إذا أصبحت مبللة.', 'لأنها تصبح غير فعالة عندما تبتل.'),
+                                stepItem('7. Don\'t leave a used mask hanging around the neck.', '', '٧. لا تترك الكمامة المستخدمة معلقة حول الرقبة.', ''),
+                                stepItem('8. [Removing the mask] Remove the mask at the doorway to the patient\'s room.', '', '٨. [خلع الكمامة] اخلع الكمامة عند مدخل غرفة المريض.', ''),
+                                stepItem('9. If using a mask with strings, first untie the lower strings of the mask.', 'This prevents the top part of the mask from falling onto the chest.', '٩. إذا كانت الكمامة بأربطة، فكّ الأربطة السفلية أولاً.', 'هذا يمنع سقوط الجزء العلوي من الكمامة على الصدر.'),
+                                stepItem('10. Untie the top strings and while holding the ties securely, remove the mask from the face. If side loops are present, lift the side loops up and away from the ears and face. Don\'t touch the front of the mask.', 'The front of the mask through which the nurse has been breathing is contaminated.', '١٠. فكّ الأربطة العلوية وأثناء الإمساك بها بإحكام أزل الكمامة عن الوجه. وإذا كانت بحلقات جانبية، ارفعها لأعلى وبعيدًا عن الأذنين والوجه دون لمس واجهة الكمامة.', 'الواجهة الأمامية للكمامة التي يتنفس من خلالها الممرض تكون ملوثة.'),
+                                stepItem('11. Discard a disposable mask in the waste container.', '', '١١. تخلص من الكمامة في حاوية النفايات.', ''),
+                                stepItem('12. Perform proper hand hygiene again.', '', '١٢. أجرِ نظافة اليدين السليمة مرة أخرى.', '')
+                            ], 'خطوات الإجراء (الارتداء والخلع):', true)
+                        ]
+                    },
+                    {
+                        title: '6. Donning and Removing a Sterile Gown',
+                        cards: [
+                            cardWithItems('Definition, Purposes & Equipment:', [
+                                { en: '<span class="highlight-text">Definition:</span> Gown is worn during procedures when the nurse\'s uniform is likely to become soiled, gowns can be disposable, plastic, water resistant, or sterile.', ar: '<span class="highlight-text">التعريف:</span> تُرتدى العباءة أثناء الإجراءات التي يُحتمل فيها تلوث زي الممرض؛ ويمكن أن تكون للاستخدام الواحد أو بلاستيكية أو مقاومة للماء أو معقمة.' },
+                                { en: '1. <span class="highlight-text">Purpose:</span> To enable the nurse to work close to a sterile field and handle sterile objects freely.', ar: '١. <span class="highlight-text">الهدف:</span> تمكين الممرض من العمل قرب المجال المعقم والتعامل مع الأشياء المعقمة بحرية.' },
+                                { en: '2. <span class="highlight-text">Purpose:</span> To protect patients from becoming contaminated with microorganisms on the nurse\'s hands, arms, and clothing.', ar: '٢. <span class="highlight-text">الهدف:</span> حماية المرضى من التلوث بالكائنات الدقيقة الموجودة على يدي وذراعي وملابس الممرض.' },
+                                { en: '<strong>Equipment:</strong> Sterile pack containing a sterile gown.', ar: '<strong>المعدات:</strong> عبوة معقمة تحتوي على عباءة معقمة.' }
+                            ], 'التعريف والأهداف والمعدات:'),
+                            cardWithItems('Steps of Procedure (Preparation & A-Donning):', [
+                                stepItem('1. Introduce self and explain to the patient what you are going to do.', '', '١. عرّف بنفسك واشرح للمريض ما ستقوم به.', ''),
+                                stepItem('2. Provide privacy to the patient.', '', '٢. وفّر الخصوصية للمريض.', ''),
+                                stepItem('3. [A-Donning] Unwrap the sterile gown pack.', '', '٣. [أ- الارتداء] افتح غلاف عبوة العباءة المعقمة.', ''),
+                                stepItem('4. Hand washing.', '', '٤. غسل اليدين.', ''),
+                                stepItem('5. Grasp the sterile gown at the crease near the neck, hold it away from you and permit it to unfold freely without touching anything including the uniform.', 'The gown will be unsterile if its outer surface touches any unsterile objects.', '٥. امسك العباءة المعقمة عند الطية القريبة من الرقبة، وأبعدها عنك واسمح لها بالانفتاح بحرية دون لمس أي شيء بما في ذلك الزي.', 'تصبح العباءة غير معقمة إذا لامس سطحها الخارجي أي أجسام غير معقمة.'),
+                                stepItem('6. Put the hand inside the shoulders of the gown without touching the outside of the gown.', '', '٦. أدخل اليدين داخل كتفي العباءة دون لمس السطح الخارجي للعباءة.', ''),
+                                stepItem('7. Have a coworker grasp the neck ties without touching the outside of the gown and pull the gown upward to cover the neckline of your uniform in front and back.', '', '٧. اطلب من زميل الإمساك بأربطة الرقبة دون لمس خارج العباءة وسحبها لأعلى لتغطية خط العنق لزيك من الأمام والخلف.', ''),
+                                stepItem('8. Have a coworker hold the waist tie of your gown.', '', '٨. اطلب من زميل الإمساك برباط الخصر الخاص بعباءتك.', '')
+                            ], 'خطوات الإجراء (التحضير والارتداء):', true),
+                            cardWithItems('B-Removing:', [
+                                { en: 'If soiled remove the gown by turning it inside out.', ar: 'إذا كانت ملوثة، اخلع العباءة بقلبها من الداخل إلى الخارج.' }
+                            ], 'ب- الخلع:')
+                        ]
+                    },
+                    {
+                        title: '7. Donning and Removing Sterile Gloves',
+                        cards: [
+                            cardWithItems('Definition, Purposes & Equipment:', [
+                                { en: '<span class="highlight-text">Definition:</span> Gloves are worn during many procedures to maintain sterility of equipment and protect a patient\'s wound.', ar: '<span class="highlight-text">التعريف:</span> تُرتدى القفازات أثناء العديد من الإجراءات للحفاظ على تعقيم المعدات وحماية جرح المريض.' },
+                                { en: '1. <span class="highlight-text">Purpose:</span> To enable the nurse to handle sterile objects freely.', ar: '١. <span class="highlight-text">الهدف:</span> تمكين الممرض من التعامل مع الأشياء المعقمة بحرية.' },
+                                { en: '2. <span class="highlight-text">Purpose:</span> To prevent patients at risk (those with open wounds) from becoming infected by microorganisms on the nurse\'s hands.', ar: '٢. <span class="highlight-text">الهدف:</span> منع إصابة المرضى المعرضين للخطر (ذوي الجروح المفتوحة) بالعدوى من الكائنات الدقيقة على يدي الممرض.' },
+                                { en: '<strong>Equipment:</strong> Package of sterile gloves.', ar: '<strong>المعدات:</strong> عبوة قفازات معقمة.' }
+                            ], 'التعريف والأهداف والمعدات:'),
+                            cardWithItems('Steps of Procedure (Donning & Removing):', [
+                                stepItem('1. Place the package of gloves on the center of the sterile field.', 'Any moisture on the surface could contaminate the gloves.', '١. ضع عبوة القفازات في منتصف المجال المعقم.', 'أي رطوبة على السطح قد تلوث القفازات.'),
+                                stepItem('2. Peeling the outer package without contaminating inner package.', '', '٢. تقشير العبوة الخارجية دون تلويث العبوة الداخلية.', ''),
+                                stepItem('3. Open the inner package as in step 6-8 in the procedure of sterile field, by pluck the flap so the fingers do not touch the inner surfaces.', '', '٣. افتح العبوة الداخلية بجذب الطرف بحيث لا تلمس الأصابع الأسطح الداخلية.', ''),
+                                stepItem('4. Grasp the glove for the dominant hand by its cuff with the thumb and first finger of the non-dominant hand. Touch the inside of cuff only.', 'The hands are not sterile.', '٤. امسك قفاز اليد المسيطرة من كفته بإبهام وسبابة اليد غير المسيطرة، والمس داخل الكفة فقط.', 'الأيدي ليست معقمة.'),
+                                stepItem('5. Insert the dominant hand into the glove and pull the glove on. Keep the thumb of inserted hand against the palm of the hand during insertion.', 'To reduce the contamination of the outside of glove.', '٥. أدخل اليد المسيطرة في القفاز واسحبه للأعلى مع إبقاء إبهام اليد المُدخلة ملاصقًا لراحة اليد أثناء الإدخال.', 'لتقليل تلوث السطح الخارجي للقفاز.'),
+                                stepItem('6. Pick up the other glove with the sterile gloved hand inserting the gloved fingers under the cuff and holding the gloved thumb close to the gloved palm.', 'To prevent accidental contamination of the glove by the bare hand.', '٦. التقط القفاز الآخر باليد المعقمة المرتدية للقفاز بإدخال الأصابع تحت الكفة وإبقاء الإبهام قريبًا من راحة اليد.', 'لمنع التلوث العرضي للقفاز باليد العارية.'),
+                                stepItem('7. Pull on the second glove, hold the thumb of gloved first hand as far as possible from the palm.', 'In this position, the thumb is less likely to touch the arm and become contaminated.', '٧. ارتدِ القفاز الثاني، وأبقِ إبهام اليد الأولى المرتدية للقفاز أبعد ما يمكن عن راحة اليد.', 'في هذا الوضع تقل احتمالية ملامسة الإبهام للذراع وتلوثه.'),
+                                stepItem('8. Adjust each glove so that it fits smoothly; pull the cuffs up by sliding the fingers under the cuffs.', '', '٨. اضبط كل قفاز ليناسب اليد بسلاسة، واسحب الكفات لأعلى بتحريك الأصابع تحت الكفات.', ''),
+                                stepItem('9. [Removing the gloves] To remove the gloves, turn them inside out, once removed the glove may be held in the opposite hand, then slip ungloved thumb or fingers inside remaining glove and remove it by turning it inside out.', '', '٩. [خلع القفازات] لخلع القفازات، اقلبها من الداخل للخارج؛ وبمجرد خلع الأول أمسكه باليد الأخرى، ثم أدخل الإبهام أو الأصابع غير المرتدية للقفاز داخل القفاز المتبقي واخلعه بقلبه من الداخل للخارج.', ''),
+                                stepItem('10. Don\'t touch outside of gloves, and discard them according to agency policy.', '', '١٠. لا تلمس السطح الخارجي للقفازات، وتخلص منها وفق سياسة المؤسسة.', '')
+                            ], 'خطوات الإجراء (الارتداء والخلع):', true)
+                        ]
+                    }
+                ]
+            },
+
+            // ========== UNIT III: VITAL SIGNS ==========
+            vital_signs: {
+                titleEn: 'Unit III: Vital Signs',
+                titleAr: 'الوحدة الثالثة: العلامات الحيوية',
+                titleNameEn: 'Body Temperature, Pulse, Respiration & Blood Pressure',
+                titleNameAr: 'قياس الحرارة، تقييم النبض، تقييم التنفس، قياس ضغط الدم',
+                slides: [
+                    // ---------- BODY TEMPERATURE ----------
+                    {
+                        title: '1. Measuring Body Temperature — Objectives, Intro, Purposes & Prep',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define the body temperature.', ar: '١. تعريف درجة حرارة الجسم.' },
+                                { en: '2. List purposes of measuring body temperature.', ar: '٢. تعداد أهداف قياس حرارة الجسم.' },
+                                { en: '3. Identify routes of measuring body temperature.', ar: '٣. تحديد طرق ومواضع قياس حرارة الجسم.' },
+                                { en: '4. Prepare the patient before procedure.', ar: '٤. تحضير المريض قبل الإجراء.' },
+                                { en: '5. Collect necessary equipment for measuring body temperature.', ar: '٥. تجميع المعدات اللازمة لقياس حرارة الجسم.' },
+                                { en: '6. Perform technique for measuring oral, axillary, and rectal temperature.', ar: '٦. تنفيذ تقنية قياس الحرارة الفموية والإبطية والشرجية.' },
+                                { en: '7. Apply the post procedure.', ar: '٧. تطبيق إجراءات ما بعد القياس.' },
+                                { en: '8. Document the result.', ar: '٨. توثيق النتيجة.' }
+                            ], 'الأهداف الأدائية:'),
+                            cardWithItems('Introduction & Routes:', [
+                                { en: '<strong>Introduction:</strong> The most common sites for measuring body temperature are oral, rectal, axillary, and tympanic. Site most often used for body temperature measurement is sublingual. Monitor patients who are at risk for temperature alterations (those exposed to extreme temperatures; patients at risk for or with a diagnosis of infection; patients with a leukocyte count below 5000 or above 12,000).', ar: '<strong>مقدمة:</strong> أكثر المواضع شيوعًا لقياس حرارة الجسم هي الفم والشرج والإبط وطبلة الأذن، وأكثر موضع استخدامًا هو تحت اللسان. راقب المرضى المعرضين لاضطرابات الحرارة (المتعرضين لحرارة شديدة، المعرضين للعدوى أو المشخصين بها، ومن يقل عدد كريات الدم البيضاء لديهم عن ٥٠٠٠ أو يزيد عن ١٢٠٠٠).' },
+                                { en: '<strong>Routes for measuring temperature:</strong><br>1. Oral temperature (mercury thermometer).<br>2. Axillary temperature (mercury thermometer).<br>3. Rectal temperature (mercury thermometer).', ar: '<strong>طرق القياس:</strong><br>١. الحرارة الفموية (ترمومتر زئبقي).<br>٢. الحرارة الإبطية (ترمومتر زئبقي).<br>٣. الحرارة الشرجية (ترمومتر زئبقي).' }
+                            ], 'المقدمة والطرق:'),
+                            cardWithItems('Purposes:', [
+                                { en: '1. Determine if core temperature is within normal range.', ar: '١. تحديد ما إذا كانت الحرارة الأساسية ضمن المعدل الطبيعي.' },
+                                { en: '2. To acquire a baseline measurement on admission.', ar: '٢. الحصول على قياس أساسي (خط أساس) عند الدخول للمستشفى.' },
+                                { en: '3. To monitor abnormalities of body temperature.', ar: '٣. مراقبة اضطرابات درجة حرارة الجسم.' },
+                                { en: '4. Determine changes in core temperature in response to specific therapies (e.g., antipyretic medication, immunosuppressive therapy, or invasive procedures).', ar: '٤. تحديد التغيرات في الحرارة الأساسية استجابةً لعلاجات محددة (مثل خافضات الحرارة أو مثبطات المناعة أو الإجراءات الغازية).' }
+                            ], 'الأهداف:'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Assess patient to determine appropriate method to obtain body temperature.', ar: '١. تقييم المريض لتحديد الطريقة المناسبة لقياس الحرارة.' },
+                                { en: '2. For an oral temperature, obtain reading 15 to 30 minutes after ingestion of hot or cold food or fluids or smoking.', ar: '٢. لقياس الحرارة الفموية، خذ القراءة بعد ١٥ إلى ٣٠ دقيقة من تناول الطعام أو السوائل الساخنة أو الباردة أو التدخين.' },
+                                { en: '3. Oral route is contraindicated if patient is unable to hold thermometer or if there is a risk that patient may bite thermometer.', ar: '٣. يُمنع الطريق الفموي إذا كان المريض غير قادر على إمساك الترمومتر أو هناك خطر أن يعضه.' },
+                                { en: '4. Rectal thermometer must be held securely in place and never left unattended.', ar: '٤. يجب تثبيت الترمومتر الشرجي بإحكام في مكانه وعدم تركه دون مراقبة أبدًا.' },
+                                { en: '5. Assess signs and symptoms of temperature alteration and factors that influence body temperature.', ar: '٥. تقييم علامات وأعراض تغير الحرارة والعوامل المؤثرة على حرارة الجسم.' }
+                            ], 'التحضير:')
+                        ]
+                    },
+                    {
+                        title: '2. Oral Temperature (Mercury Thermometer) — Equipment & Steps (1–24)',
+                        cards: [
+                            cardWithItems('Equipment:', [
+                                { en: '1. An oral thermometer.', ar: '١. ترمومتر فموي.' },
+                                { en: '2. Soft gauze.', ar: '٢. شاش ناعم.' },
+                                { en: '3. Vital sign flow-sheet and pen.', ar: '٣. ورقة متابعة العلامات الحيوية وقلم.' }
+                            ], 'المعدات:'),
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Check medical order or nursing care plan for frequency of measurement and routes.', 'Frequent temperature measurement may be appropriate based on medical & nursing assessment.', '١. تحقق من الأمر الطبي أو خطة الرعاية التمريضية لتكرار القياس والطريق.', 'قد يكون القياس المتكرر للحرارة مناسبًا بناءً على التقييم الطبي والتمريضي.'),
+                                stepItem('2. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '٢. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('3. Explain procedure to patient.', 'To reduce anxiety and assess the patient\'s ability to assist with the procedure.', '٣. اشرح الإجراء للمريض.', 'لتقليل القلق وتقييم قدرة المريض على المساعدة في الإجراء.'),
+                                stepItem('4. Gather appropriate equipment.', 'Ease performance of the procedure.', '٤. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('5. Perform hand hygiene and wear gloves.', 'Reduces transmission of microorganisms & prevents spread of infection.', '٥. أجرِ نظافة اليدين وارتدِ القفازات.', 'يقلل انتقال الكائنات الدقيقة ويمنع انتشار العدوى.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Close curtains around bed and close the door of the room.', 'To maintain patient privacy.', '٧. أغلق الستائر حول السرير وأغلق باب الغرفة.', 'للحفاظ على خصوصية المريض.'),
+                                stepItem('8. Ask if patient has ingested hot/cold food or drink, smoked, or chewed gum within last 20 minutes.', 'Because hot/cold foods affect oral temperature.', '٨. اسأل إذا كان المريض قد تناول طعامًا أو شرابًا ساخنًا/باردًا أو دخن أو مضغ علكة خلال آخر ٢٠ دقيقة.', 'لأن الأطعمة الساخنة والباردة تؤثر على حرارة الفم.'),
+                                stepItem('9. Wipe the thermometer with clean, soft tissue gauze using a firm twisting motion.', 'Chemical solution may irritate the mucous membrane.', '٩. امسح الترمومتر بشاش ناعم نظيف بحركة لولبية ثابتة.', 'المحلول الكيميائي قد يهيج الغشاء المخاطي.'),
+                                stepItem('10. Wipe from the bulb toward the fingers with soft gauze.', 'Wiping from an area where there are few or no organisms.', '١٠. امسح من البصلة باتجاه الأصابع بالشاش الناعم.', 'المسح من المنطقة الأقل أو الخالية من الكائنات الدقيقة.'),
+                                stepItem('11. Hold color-coded end of glass thermometer tightly with thumb and forefinger.', 'Prevents contamination of bulb to be inserted into patient\'s mouth.', '١١. امسك الطرف الملون للترمومتر الزجاجي بإحكام بالإبهام والسبابة.', 'يمنع تلوث البصلة التي ستُدخل في فم المريض.'),
+                                stepItem('12. Slowly rotate thermometer at eye level to read mercury level.', 'Mercury is to be below 96 F (35.5 C). Thermometer reading must be below patient\'s actual temperature before use.', '١٢. أدر الترمومتر ببطء عند مستوى العين لقراءة مستوى الزئبق.', 'يجب أن يكون الزئبق أقل من ٩٦ فهرنهايت (٣٥.٥ مئوية)، وأقل من حرارة المريض الفعلية قبل الاستخدام.'),
+                                stepItem('13. If mercury is higher than desired level, using a sharp, snapping motion of the wrist, shake down mercury below 35C.', 'This moves the mercury back into bulb.', '١٣. إذا كان الزئبق أعلى من المستوى المطلوب، رُج الترمومتر بحركة سريعة وحادة من الرسغ لخفضه تحت ٣٥ مئوية.', 'هذا يعيد الزئبق إلى البصلة.'),
+                                stepItem('14. Ask patient to open mouth and gently place thermometer at base of tongue to the right or left of the frenulum, in the posterior sublingual pocket.', 'Reflects the core temperature of the blood in the larger blood vessels.', '١٤. اطلب من المريض فتح فمه وضع الترمومتر بلطف عند قاعدة اللسان يمين أو يسار اللجام في الجيب الخلفي تحت اللسان.', 'يعكس الحرارة الأساسية للدم في الأوعية الدموية الكبيرة.'),
+                                stepItem('15. Wait at least 3 minutes.', 'Allowing sufficient time for the mercury to expand ensures an accurate measurement.', '١٥. انتظر ٣ دقائق على الأقل.', 'إتاحة وقت كافٍ لتمدد الزئبق يضمن قياسًا دقيقًا.'),
+                                stepItem('16. Carefully remove thermometer from patient mouth.', 'Gentle handling prevents discomfort to patient and ensures an accurate reading.', '١٦. أزل الترمومتر بعناية من فم المريض.', 'التعامل اللطيف يمنع انزعاج المريض ويضمن قراءة دقيقة.'),
+                                stepItem('17. Wipe off glass thermometer using gauze pad with one downward motion toward bulb end.', 'Wiping from an area where there are a few organisms.', '١٧. امسح الترمومتر الزجاجي بقطعة شاش بحركة واحدة للأسفل باتجاه طرف البصلة.', 'المسح من المنطقة التي بها عدد أقل من الكائنات الدقيقة.'),
+                                stepItem('18. Read thermometer.', 'To see & record the point at which the mercury reach.', '١٨. اقرأ الترمومتر.', 'لرؤية وتسجيل النقطة التي وصل إليها الزئبق.'),
+                                stepItem('19. Dispose of gauze in a container.', '', '١٩. تخلص من الشاش في حاوية النفايات.', ''),
+                                stepItem('20. Wash thermometer in cool soapy water. Dry and place it in a container, shake down the thermometer and return it to its container.', '', '٢٠. اغسل الترمومتر بماء بارد وصابون، جففه، اخفض الزئبق، وأعده إلى حاويته.', ''),
+                                stepItem('21. Hand washing.', '', '٢١. غسل اليدين.', ''),
+                                stepItem('22. Rearrange the equipment.', '', '٢٢. أعد ترتيب المعدات.', ''),
+                                stepItem('23. Place patient in comfortable position.', '', '٢٣. ضع المريض في وضعية مريحة.', ''),
+                                stepItem('24. Documentation: time, site, and reading to supervisor immediately.', 'Patient data must be recorded properly to aid the physician in the diagnosis and to provide future reference.', '٢٤. التوثيق: الوقت والموضع والقراءة وإبلاغ المشرف فورًا.', 'يجب تسجيل بيانات المريض بدقة لمساعدة الطبيب في التشخيص وتوفير مرجع مستقبلي.')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+                    {
+                        title: '3. Axillary Temperature (Mercury Thermometer) — Equipment & Steps (1–22)',
+                        cards: [
+                            cardWithItems('Equipment & Preparation:', [
+                                { en: '1. A thermometer (mercury).', ar: '١. ترمومتر (زئبقي).' },
+                                { en: '2. Soft gauze.', ar: '٢. شاش ناعم.' },
+                                { en: '3. Gauze pads to remove perspiration from axilla.', ar: '٣. قطع شاش لإزالة العرق من الإبط.' },
+                                { en: '4. Vital sign flow-sheet and pen.', ar: '٤. ورقة متابعة العلامات الحيوية وقلم.' },
+                                { en: '<strong>Preparation:</strong> As oral temperature.', ar: '<strong>التحضير:</strong> مثل الحرارة الفموية.' }
+                            ], 'المعدات والتحضير:'),
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '١. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('2. Explain procedure to patient.', 'Attain patient\'s cooperation.', '٢. اشرح الإجراء للمريض.', 'كسب تعاون المريض.'),
+                                stepItem('3. Gather appropriate equipment.', 'Ease performance of the procedure.', '٣. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('4. Perform hand hygiene and observe other appropriate infection control procedures.', 'Prevents spread of infection.', '٤. أجرِ نظافة اليدين واتبع إجراءات مكافحة العدوى المناسبة.', 'يمنع انتشار العدوى.'),
+                                stepItem('5. Provide for patient\'s privacy.', 'Avoid patient\'s embarrassment.', '٥. وفّر الخصوصية للمريض.', 'تجنب إحراج المريض.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Position patient either sitting or lying position.', '', '٧. ضع المريض في وضعية الجلوس أو الاستلقاء.', ''),
+                                stepItem('8. Expose axillary area.', '', '٨. اكشف منطقة الإبط.', ''),
+                                stepItem('9. Pat axilla dry with the gauze pads.', 'Perspiration cools the skin which would cause an inaccurate reading.', '٩. جفف الإبط بالتربيت بقطع الشاش.', 'العرق يبرد الجلد مما قد يسبب قراءة غير دقيقة.'),
+                                stepItem('10. Shake down thermometer below 35C.', '', '١٠. اخفض الترمومتر بالرج تحت ٣٥ درجة مئوية.', ''),
+                                stepItem('11. Place thermometer or probe into axilla with bulb in center of axilla.', '', '١١. ضع الترمومتر أو المجس في الإبط بحيث تكون البصلة في منتصف الإبط.', ''),
+                                stepItem('12. Lower the arm over the thermometer, and place the patient\'s forearm across the chest.', 'To maintain the proper position of the thermometer against the blood vessels in the axilla.', '١٢. أنزل الذراع فوق الترمومتر، وضع ساعد المريض عبر الصدر.', 'للحفاظ على الوضع الصحيح للترمومتر ملاصقًا للأوعية الدموية في الإبط.'),
+                                stepItem('13. Wait 5 minutes, remain with the patient and hold the thermometer in place if the patient is unable to do so.', 'This time is required to obtain a valid reading & prevents injury to the patient.', '١٣. انتظر ٥ دقائق، وابقَ مع المريض وثبّت الترمومتر إذا كان المريض غير قادر على ذلك.', 'هذا الوقت مطلوب للحصول على قراءة صحيحة ويمنع إصابة المريض.'),
+                                stepItem('14. Lift patient\'s arm at elbow and remove thermometer.', '', '١٤. ارفع ذراع المريض من الكوع وأزل الترمومتر.', ''),
+                                stepItem('15. Wipe off thermometer using gauze pad with one downward motion toward bulb end.', 'Wiping from area where there are a few organisms.', '١٥. امسح الترمومتر بقطعة شاش بحركة واحدة للأسفل باتجاه طرف البصلة.', 'المسح من المنطقة الأقل في الكائنات الدقيقة.'),
+                                stepItem('16. Read thermometer.', 'See and record the point at which the mercury reaches.', '١٦. اقرأ الترمومتر.', 'رؤية وتسجيل النقطة التي يصل إليها الزئبق.'),
+                                stepItem('17. Dispose of gauze in a container.', '', '١٧. تخلص من الشاش في حاوية النفايات.', ''),
+                                stepItem('18. Wash thermometer in cool soapy water. Dry and place it in a container, shake down the thermometer and return it to its container.', '', '١٨. اغسل الترمومتر بماء بارد وصابون، جففه، اخفض الزئبق وأعده لحاويته.', ''),
+                                stepItem('19. Hand washing.', '', '١٩. غسل اليدين.', ''),
+                                stepItem('20. Rearrange the equipment.', '', '٢٠. أعد ترتيب المعدات.', ''),
+                                stepItem('21. Place patient in comfortable position.', '', '٢١. ضع المريض في وضعية مريحة.', ''),
+                                stepItem('22. Record and report readings to supervisor immediately.', '', '٢٢. سجّل القراءات وأبلغ المشرف فورًا.', '')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+                    {
+                        title: '4. Rectal Temperature (Mercury Thermometer) — Equipment & Steps (1–22)',
+                        cards: [
+                            cardWithItems('Equipment & Preparation:', [
+                                { en: '1. Rectal thermometer (mercury).', ar: '١. ترمومتر شرجي (زئبقي).' },
+                                { en: '2. Soft gauze.', ar: '٢. شاش ناعم.' },
+                                { en: '3. Lubricant.', ar: '٣. مادة مزلقة.' },
+                                { en: '4. Vital sign flow-sheet and pen.', ar: '٤. ورقة متابعة العلامات الحيوية وقلم.' },
+                                { en: '5. Clean gloves.', ar: '٥. قفازات نظيفة.' },
+                                { en: '<strong>Preparation:</strong> As oral temperature.', ar: '<strong>التحضير:</strong> مثل الحرارة الفموية.' }
+                            ], 'المعدات والتحضير:'),
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '١. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('2. Explain procedure to patient.', 'Attain patient\'s cooperation.', '٢. اشرح الإجراء للمريض.', 'كسب تعاون المريض.'),
+                                stepItem('3. Gather appropriate equipment.', 'Ease performance of the procedure.', '٣. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('4. Perform hand hygiene and observe other appropriate infection control procedures.', 'Prevents spread of infection.', '٤. أجرِ نظافة اليدين واتبع إجراءات مكافحة العدوى المناسبة.', 'يمنع انتشار العدوى.'),
+                                stepItem('5. Provide for patient\'s privacy.', 'Avoid patient\'s embarrassment.', '٥. وفّر الخصوصية للمريض.', 'تجنب إحراج المريض.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Assist patient into Sims position or side-lying position (position patient lying on his side with top knee flexed). Children may be placed in a prone position.', 'This provides for optimal exposure of the anal area for correct placement of the thermometer & allows visualization of the anus.', '٧. ساعد المريض على اتخاذ وضعية سيمز أو الاستلقاء الجانبي (مع ثني الركبة العلوية)، ويمكن وضع الأطفال في وضعية الانبطاح.', 'يوفر كشفًا مثاليًا لمنطقة الشرج لوضع الترمومتر بدقة ورؤية فتحة الشرج.'),
+                                stepItem('8. Shake down thermometer below 35C.', '', '٨. اخفض الترمومتر بالرج تحت ٣٥ درجة مئوية.', ''),
+                                stepItem('9. Squeeze a liberal amount of water-soluble lubricant onto a tissue. Lubricate thermometer (2.5–4 cm) for adult and (1–1.5 cm) for infant.', 'Insertion of the thermometer into the lubricant container would contaminate contents of the container. Use of lubrication minimizes trauma to the rectal mucosa during insertion.', '٩. ضع كمية وفيرة من المزلق القابل للذوبان في الماء على منديل، وزلّق الترمومتر (٢.٥–٤ سم للبالغ و١–١.٥ سم للرضيع).', 'إدخال الترمومتر في عبوة المزلق يلوث محتوياتها، واستخدام المزلق يقلل إصابة الغشاء المخاطي للمستقيم أثناء الإدخال.'),
+                                stepItem('10. With the non-dominant hand, raise the patient\'s upper buttock to expose the anus.', 'To completely expose anus of the patient.', '١٠. باليد غير المسيطرة، ارفع الألية العلوية للمريض لكشف فتحة الشرج.', 'لكشف فتحة الشرج بالكامل.'),
+                                stepItem('11. Ask patient to take deep breath.', 'This will relax rectal sphincter muscle.', '١١. اطلب من المريض أخذ نفس عميق.', 'هذا يرخي العضلة العاصرة الشرجية.'),
+                                stepItem('12. Gently insert the thermometer into the anus in the direction of the umbilicus. Insert the thermometer (1.5 inch) for adults. Do not force the thermometer. Insert the thermometer as the patient takes in a breath. If resistance is felt, immediately remove the thermometer.', 'Prevents trauma to the mucosa or the breakage of the thermometer.', '١٢. أدخل الترمومتر بلطف في الشرج باتجاه السرة (بعمق ١.٥ بوصة للبالغين) أثناء أخذ المريض نفسًا. لا تدفعه بالقوة، وإذا شعرت بمقاومة أخرجه فورًا.', 'يمنع إصابة الغشاء المخاطي أو انكسار الترمومتر.'),
+                                stepItem('13. Hold in place for 2 minutes.', '', '١٣. ثبّته في مكانه لمدة دقيقتين.', ''),
+                                stepItem('14. Remove the thermometer from patient\'s rectum.', '', '١٤. أزل الترمومتر من مستقيم المريض.', ''),
+                                stepItem('15. Wipe off thermometer using gauze pad with one downward motion toward bulb end.', 'Wiping from area where there are a few organisms.', '١٥. امسح الترمومتر بقطعة شاش بحركة واحدة للأسفل باتجاه طرف البصلة.', 'المسح من المنطقة الأقل في الكائنات الدقيقة.'),
+                                stepItem('16. Read thermometer.', 'To see and record the point at which the mercury reach.', '١٦. اقرأ الترمومتر.', 'لرؤية وتسجيل النقطة التي وصل إليها الزئبق.'),
+                                stepItem('17. Dispose of gauze in a container.', '', '١٧. تخلص من الشاش في حاوية النفايات.', ''),
+                                stepItem('18. Wash thermometer in cool soapy water. Dry and place it in a container, shake down the thermometer and return it to its container.', '', '١٨. اغسل الترمومتر بماء بارد وصابون، جففه، اخفض الزئبق وأعده لحاويته.', ''),
+                                stepItem('19. Hand washing.', '', '١٩. غسل اليدين.', ''),
+                                stepItem('20. Rearrange the equipment.', '', '٢٠. أعد ترتيب المعدات.', ''),
+                                stepItem('21. Place patient in comfortable position.', '', '٢١. ضع المريض في وضعية مريحة.', ''),
+                                stepItem('22. Record and report readings to supervisor immediately.', '', '٢٢. سجّل القراءات وأبلغ المشرف فورًا.', '')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+
+                    // ---------- PULSE ----------
+                    {
+                        title: '5. Assessing the Pulse — Objectives, Def, Purposes, Indications, Prep & Equipment',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define the pulse.', ar: '١. تعريف النبض.' },
+                                { en: '2. List purposes of measuring pulse.', ar: '٢. تعداد أهداف قياس النبض.' },
+                                { en: '3. Identify indications of measuring pulse.', ar: '٣. تحديد دواعي قياس النبض.' },
+                                { en: '4. Prepare the patient before procedure.', ar: '٤. تحضير المريض قبل الإجراء.' },
+                                { en: '5. Collect necessary equipment for measuring pulse.', ar: '٥. تجميع المعدات اللازمة لقياس النبض.' },
+                                { en: '6. Perform techniques for measuring radial, apical, and radio-apical pulse.', ar: '٦. تنفيذ تقنيات قياس النبض الكعبري والقمي والقمي-الكعبري.' },
+                                { en: '7. Apply the post procedures.', ar: '٧. تطبيق إجراءات ما بعد القياس.' },
+                                { en: '8. Document the result.', ar: '٨. توثيق النتيجة.' }
+                            ], 'الأهداف الأدائية:'),
+                            cardWithItems('Definition, Purposes & Indications:', [
+                                { en: '<span class="highlight-text">Definition:</span> Pulse is a wave of blood created by contraction of the left ventricle of the heart.', ar: '<span class="highlight-text">التعريف:</span> النبض هو موجة من الدم تنشأ عن انقباض البطين الأيسر للقلب.' },
+                                { en: '<strong>Purposes:</strong><br>1. To obtain a baseline measurement of heart rate, rhythm and volume.<br>2. To evaluate the heart\'s response to various therapies and medications.<br>3. To assess local blood flow to an extremity.', ar: '<strong>الأهداف:</strong><br>١. الحصول على قياس أساسي لمعدل ضربات القلب وإيقاعه وحجمه.<br>٢. تقييم استجابة القلب لمختلف العلاجات والأدوية.<br>٣. تقييم تدفق الدم الموضعي إلى أحد الأطراف.' },
+                                { en: '<strong>Indications:</strong><br>1. Before any invasive procedure.<br>2. Heart and respiratory disorders.<br>3. Pallor or cyanosed patient.', ar: '<strong>دواعي الاستعمال:</strong><br>١. قبل أي إجراء غازي.<br>٢. اضطرابات القلب والجهاز التنفسي.<br>٣. المريض الشاحب أو المزرق.' }
+                            ], 'التعريف والأهداف والدواعي:'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Review medical history to determine risk factors for alterations in pulse rate (heart disease, fluid or electrolyte imbalance, pain, and hemorrhage).', ar: '١. مراجعة التاريخ الطبي لتحديد عوامل الخطر لتغيرات معدل النبض (أمراض القلب، اختلال السوائل أو الكهارل، الألم، والنزيف).' },
+                                { en: '2. Assess for physical signs and symptoms of alteration in cardiac or vascular status (dyspnea, chest pain, and palpitations).', ar: '٢. تقييم العلامات والأعراض الجسدية لتغير الحالة القلبية أو الوعائية (ضيق التنفس، ألم الصدر، والخفقان).' },
+                                { en: '3. Identify factors that influence pulse (age, medications, fever, and exercise).', ar: '٣. تحديد العوامل المؤثرة على النبض (العمر، الأدوية، الحمى، والتمارين).' },
+                                { en: '4. Identify site most appropriate for pulse assessment.', ar: '٤. تحديد الموضع الأنسب لتقييم النبض.' },
+                                { en: '5. Review previous and baseline pulse assessment.', ar: '٥. مراجعة تقييم النبض السابق وخط الأساس.' }
+                            ], 'التحضير:'),
+                            cardWithItems('Equipment:', [
+                                { en: '1. Wristwatch with second hand.', ar: '١. ساعة يد بعقرب ثوانٍ.' },
+                                { en: '2. Stethoscope.', ar: '٢. سماعة طبية.' },
+                                { en: '3. Antiseptic wipes.', ar: '٣. مسحات مطهرة.' },
+                                { en: '4. Gloves.', ar: '٤. قفازات.' },
+                                { en: '5. Vital sign flow-sheet and pen.', ar: '٥. ورقة متابعة العلامات الحيوية وقلم.' }
+                            ], 'المعدات:')
+                        ]
+                    },
+                    {
+                        title: '6. A. Assessing Radial (Wrist) Pulse — Steps (1–12)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Wash hands.', 'Reduces transmission of microorganisms.', '١. اغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.'),
+                                stepItem('2. Inform patient of the site(s) where pulse will be measured.', 'Encourages participation and allays anxiety.', '٢. أبلغ المريض بالموضع (المواضع) الذي سيُقاس منه النبض.', 'يشجع المشاركة ويهدئ القلق.'),
+                                stepItem('3. Flex patient\'s elbow and place lower part of arm across chest.', 'Maintains wrist in full extension and exposes artery for palpation. Placing patient\'s hand over chest will facilitate later respiratory assessment without undue attention to the nurse.', '٣. اثنِ مرفق المريض وضع الجزء السفلي من الذراع عبر الصدر.', 'يحافظ على امتداد المعصم الكامل ويكشف الشريان للجس، كما يسهل وضع اليد على الصدر تقييم التنفس لاحقًا دون لفت انتباه المريض.'),
+                                stepItem('4. Support patient\'s wrist by grasping outer aspect with thumb.', 'Stabilizes wrist and allows for pressure to be exerted.', '٤. ادعم معصم المريض بإمساك جانبه الخارجي بالإبهام.', 'يثبت المعصم ويسمح بتطبيق الضغط.'),
+                                stepItem('5. Place index and middle fingers on inner aspect of patient\'s wrist over the radial artery, and apply light but firm pressure until pulse is palpated.', 'Facilitating palpation of pulsating pulse.', '٥. ضع إصبعي السبابة والوسطى على الجانب الداخلي لمعصم المريض فوق الشريان الكعبري، واضغط بضغط خفيف ولكن ثابت حتى تشعر بالنبض.', 'يسهل جس النبض النابض.'),
+                                stepItem('6. Identify pulse rhythm.', 'Palpate pulse until rhythm is determined. Describe as regular or irregular.', '٦. حدد إيقاع النبض.', 'اجسس النبض حتى يتحدد الإيقاع، واصفًا إياه بالمنتظم أو غير المنتظم.'),
+                                stepItem('7. Determine pulse volume.', 'Quality of pulse strength is an indication of stroke volume. Describe as normal, weak, strong, or bounding.', '٧. حدد حجم (قوة) النبض.', 'جودة قوة النبض مؤشر على حجم الضربة القلبية، ويُوصَف بأنه طبيعي أو ضعيف أو قوي أو وثّاب.'),
+                                stepItem('8. Count pulse rate by using second hand on watch. For a regular rhythm, count number of beats for 30 seconds and multiply by 2. For an irregular rhythm, count number of beats for a full minute.', 'An irregular rhythm requires a full minute of assessment to identify the number of inefficient cardiac contractions that fail to transmit a pulsation.', '٨. عدّ معدل النبض باستخدام عقرب الثواني: للإيقاع المنتظم عدّ لمدة ٣٠ ثانية واضرب في ٢، وللإيقاع غير المنتظم عدّ لدقيقة كاملة.', 'الإيقاع غير المنتظم يتطلب تقييمًا لدقيقة كاملة لتحديد عدد الانقباضات القلبية غير الفعالة التي تفشل في نقل نبضة.'),
+                                stepItem('9. Hand washing.', '', '٩. غسل اليدين.', ''),
+                                stepItem('10. Rearrange the equipment.', '', '١٠. أعد ترتيب المعدات.', ''),
+                                stepItem('11. Place patient in comfortable position.', '', '١١. ضع المريض في وضعية مريحة.', ''),
+                                stepItem('12. Document the pulse rate, rhythm, and volume.', '', '١٢. وثّق معدل النبض وإيقاعه وحجمه.', '')
+                            ], 'خطوات قياس النبض الكعبري:', true)
+                        ]
+                    },
+                    {
+                        title: '7. B. Assessing Apical Pulse — Steps (1–13)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Wash hands.', 'Reduces transmission of microorganisms.', '١. اغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.'),
+                                stepItem('2. Raise patient\'s gown to expose sternum and left side of chest.', 'Allows access to patient\'s chest for proper placement of stethoscope.', '٢. ارفع عباءة المريض لكشف عظمة القص والجانب الأيسر من الصدر.', 'يتيح الوصول لصدر المريض لوضع السماعة بشكل صحيح.'),
+                                stepItem('3. Cleanse earpiece and diaphragm of stethoscope with an alcohol swab.', 'Decreases transmission of microorganisms from one prescribing practitioner to another (earpiece) and from one patient to another (diaphragm).', '٣. نظف قطعتي الأذن وغشاء السماعة الطبية بمسحة كحول.', 'يقلل انتقال الكائنات الدقيقة من ممارس لآخر (قطع الأذن) ومن مريض لآخر (الغشاء).'),
+                                stepItem('4. Put stethoscope around neck.', 'Ensures stethoscope is nearby for frequent use.', '٤. ضع السماعة حول الرقبة.', 'يضمن بقاء السماعة قريبة للاستخدام المتكرر.'),
+                                stepItem('5. Locate apex of heart:<br>- With patient lying on left side, locate suprasternal notch.<br>- Palpate second intercostal space to left of sternum.<br>- Place index finger in intercostal space, counting downward until fifth intercostal space is located.<br>- Move index finger along fourth intercostal space left of the sternal border and to the fifth intercostal space left of the midclavicular line to palpate the point of maximal impulse (PMI).', 'Identification of landmarks facilitates correct placement of the stethoscope at the fifth intercostal space in order to hear PMI.', '٥. حدد قمة القلب:<br>- مع استلقاء المريض على جانبه الأيسر، حدد الثلمة فوق القص.<br>- اجسس الفراغ الوربي الثاني يسار القص.<br>- ضع السبابة في الفراغ الوربي وعدّ نزولاً حتى الفراغ الوربي الخامس.<br>- حرك السبابة إلى الفراغ الوربي الخامس يسار الخط المنصف للترقوة لجس نقطة النبض الأقصى (PMI).', 'تحديد المعالم التشريحية يسهل وضع السماعة الصحيح عند الفراغ الوربي الخامس لسماع PMI.'),
+                                stepItem('6. Inform patient that his or her heart will be listened to. Instruct patient to remain silent.', 'Elicits patient support. Stethoscope amplifies noise.', '٦. أبلغ المريض أنه سيتم الاستماع لقلبه واطلب منه التزام الصمت.', 'يكسب تعاون المريض لأن السماعة تضخم الضوضاء.'),
+                                stepItem('7. With dominant hand, put earpiece of the stethoscope in ears and grasp diaphragm of the stethoscope in the palm of the hand for 5 to 10 seconds.', 'Dominant hand facilitates placement of earpiece with one hand. Heat warms metal or plastic diaphragm & prevents startling patient.', '٧. باليد المسيطرة، ضع السماعة في الأذنين وامسك غشاء السماعة في راحة اليد لمدة ٥ إلى ١٠ ثوانٍ.', 'تدفئ الحرارة الغشاء المعدني أو البلاستيكي وتمنع جفلان المريض.'),
+                                stepItem('8. Place diaphragm of stethoscope over the PMI and auscultate for sounds S1 and S2 to hear lub-dub sound.', 'Movement of blood through the heart valves creates S1 and S2 sounds.', '٨. ضع غشاء السماعة فوق نقطة النبض الأقصى (PMI) وتسمّع الصوتين S1 و S2 لسماع صوت (لب-دب).', 'حركة الدم عبر صمامات القلب تُنشئ صوتي S1 و S2.'),
+                                stepItem('9. Note regularity of rhythm.', 'Listen for a regular rhythm before counting.', '٩. لاحظ انتظام الإيقاع.', 'استمع لإيقاع منتظم قبل العد.'),
+                                stepItem('10. Start to count while looking at second hand of watch. Count lub-dub sound as one beat: For a regular rhythm, count rate for 30 seconds and multiply by 2. For an irregular rhythm, count rate for a full minute, noting number of irregular beats.', 'Establishment of a rhythmic pattern determines length of time to count the heartbeats to ensure accurate measurement.', '١٠. ابدأ العد مع النظر لعقرب الثواني (احسب صوت لب-دب كضربة واحدة): للإيقاع المنتظم عدّ لمدة ٣٠ ثانية واضرب في ٢، وللإيقاع غير المنتظم عدّ لدقيقة كاملة مع ملاحظة عدد الضربات غير المنتظمة.', 'تحديد النمط الإيقاعي يحدد المدة اللازمة لعد ضربات القلب لضمان دقة القياس.'),
+                                stepItem('11. Share findings with patient.', 'Promotes patient participation in care.', '١١. شارك النتائج مع المريض.', 'يعزز مشاركة المريض في الرعاية.'),
+                                stepItem('12. Record the rate, rhythm, and number of irregular beats.', 'For accurate documentation.', '١٢. سجّل المعدل والإيقاع وعدد الضربات غير المنتظمة.', 'للتوثيق الدقيق.'),
+                                stepItem('13. Wash hands.', 'Reduces transmission of microorganisms.', '١٣. اغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.')
+                            ], 'خطوات قياس النبض القمي:', true)
+                        ]
+                    },
+                    {
+                        title: '8. C. Assessing Apical-Radial Pulse — Overview & Steps (1–21)',
+                        cards: [
+                            cardWithItems('Definition, Purpose & Preparation:', [
+                                { en: '<span class="highlight-text">Definition:</span> Measuring both the apical and radial pulse simultaneously.', ar: '<span class="highlight-text">التعريف:</span> قياس كل من النبض القمي والكعبري في آنٍ واحد.' },
+                                { en: '<span class="highlight-text">Purpose:</span> To determine adequacy of peripheral circulation.', ar: '<span class="highlight-text">الهدف:</span> تحديد كفاية الدورة الدموية الطرفية.' },
+                                { en: '<span class="highlight-text">Preparation:</span> If using the two-nurse technique ensure that the other nurse is available at this time.', ar: '<span class="highlight-text">التحضير:</span> في حال استخدام تقنية الممرضتين، تأكد من توفر الممرضة الأخرى في هذا الوقت.' }
+                            ], 'التعريف والهدف والتحضير:'),
+                            cardWithItems('Steps of Procedure (General & Two-Nurse Technique):', [
+                                stepItem('1. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '١. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('2. Explain procedure to patient.', 'This decreases the patient\'s anxiety.', '٢. اشرح الإجراء للمريض.', 'هذا يقلل قلق المريض.'),
+                                stepItem('3. Gather appropriate equipment.', 'Ease performance of the procedure.', '٣. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('4. Perform hand hygiene and observe other appropriate infection control procedures.', 'Prevents spread of infection.', '٤. أجرِ نظافة اليدين واتبع إجراءات مكافحة العدوى المناسبة.', 'يمنع انتشار العدوى.'),
+                                stepItem('5. Provide for patient\'s privacy.', 'Avoid patient\'s embarrassment.', '٥. وفّر الخصوصية للمريض.', 'تجنب إحراج المريض.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Position patient in supine or sitting position.', 'This exposes the portion of the chest wall for the site of the apical pulse.', '٧. ضع المريض في وضعية الاستلقاء الظهري أو الجلوس.', 'يكشف جزء جدار الصدر لموقع النبض القمي.'),
+                                stepItem('8. Locate the apical and radial pulse sites.', '', '٨. حدد موقعي النبض القمي والكعبري.', ''),
+                                stepItem('9. [Two-nurse technique] Place the watch where both nurses can see it.', '', '٩. [تقنية الممرضتين] ضع الساعة حيث تستطيع كلتا الممرضتين رؤيتها.', ''),
+                                stepItem('10. The nurse who is taking the radial pulse holds the watch.', 'To facilitate accurate measure.', '١٠. الممرضة التي تقيس النبض الكعبري تمسك الساعة.', 'لتسهيل القياس الدقيق.'),
+                                stepItem('11. Decide on a time to begin counting.', 'This ensures that both counts are done simultaneously.', '١١. اتفقا على وقت لبدء العد.', 'يضمن إجراء العدين في وقت واحد.'),
+                                stepItem('12. The nurse taking the radial pulse says start at the same time.', 'This ensures that simultaneous counts are taken.', '١٢. تقول الممرضة التي تقيس النبض الكعبري "ابدأ" في نفس اللحظة.', 'يضمن أخذ العد المتزامن.'),
+                                stepItem('13. Each nurse counts the pulse rate for 60 seconds.', 'A full 60 seconds count is necessary for accurate assessment.', '١٣. تعد كل ممرضة معدل النبض لمدة ٦٠ ثانية.', 'العد لمدة ٦٠ ثانية كاملة ضروري للتقييم الدقيق.'),
+                                stepItem('14. Both nurses end the count when the nurse taking the radial pulse says stop.', '', '١٤. تنهي كلتا الممرضتين العد عندما تقول ممرضة النبض الكعبري "توقف".', ''),
+                                stepItem('15. Compare the rates obtained. If a difference is noted between the rates, subtract the radial rate from the apical rate.', 'This determines if a pulse deficit exists. A pulse deficit represents the number of ineffective or non-perfused heartbeats.', '١٥. قارن المعدلين؛ وإذا وُجد فرق اطرح المعدل الكعبري من المعدل القمي.', 'يحدد وجود عجز النبض (Pulse deficit)، وهو يمثل عدد ضربات القلب غير الفعالة أو غير المروية.')
+                            ], 'خطوات الإجراء (العامة وتقنية الممرضتين):', true),
+                            cardWithItems('One-Nurse Technique & Post-Procedure:', [
+                                stepItem('16. [One-nurse technique] Assess the apical pulse for 60 seconds.', '', '١٦. [تقنية الممرضة الواحدة] قيّم النبض القمي لمدة ٦٠ ثانية.', ''),
+                                stepItem('17. Assess the radial pulse for 60 seconds.', '', '١٧. قيّم النبض الكعبري لمدة ٦٠ ثانية.', ''),
+                                stepItem('18. Hand washing.', '', '١٨. غسل اليدين.', ''),
+                                stepItem('19. Rearrange the equipment.', '', '١٩. أعد ترتيب المعدات.', ''),
+                                stepItem('20. Replace the patient\'s clothing, and place patient in comfortable position.', 'This restores patient\'s privacy.', '٢٠. أعد ملابس المريض وضع المريض في وضعية مريحة.', 'يعيد خصوصية المريض.'),
+                                stepItem('21. Document the pulse rate, rhythm, and volume.', '', '٢١. وثّق معدل النبض وإيقاعه وحجمه.', '')
+                            ], 'تقنية الممرضة الواحدة وما بعد الإجراء:')
+                        ]
+                    },
+
+                    // ---------- RESPIRATION ----------
+                    {
+                        title: '9. Assessing Respiration — Overview, Equipment & Steps (1–13)',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define respiration.', ar: '١. تعريف التنفس.' },
+                                { en: '2. List purposes of assessing respiration.', ar: '٢. تعداد أهداف تقييم التنفس.' },
+                                { en: '3. Identify indications of assessing respiration.', ar: '٣. تحديد دواعي تقييم التنفس.' },
+                                { en: '4. Identify equipment used to assess respiration.', ar: '٤. تحديد المعدات المستخدمة لتقييم التنفس.' },
+                                { en: '5. Perform techniques for assessing respiration, safely and accurately.', ar: '٥. تنفيذ تقنيات تقييم التنفس بأمان ودقة.' },
+                                { en: '6. Identify the preparation for measuring respiration.', ar: '٦. تحديد التحضير لقياس التنفس.' },
+                                { en: '7. Apply measures taken to maintain the patient\'s physical comfort and safety during the techniques.', ar: '٧. تطبيق التدابير اللازمة للحفاظ على راحة المريض وسلامته الجسدية أثناء التقنيات.' },
+                                { en: '8. Apply the post procedures.', ar: '٨. تطبيق إجراءات ما بعد القياس.' },
+                                { en: '9. Document the result.', ar: '٩. توثيق النتيجة.' }
+                            ], 'الأهداف الأدائية:'),
+                            cardWithItems('Definition, Purposes & Indications:', [
+                                { en: '<span class="highlight-text">Definition:</span> Respiration includes the intake of oxygen (inhalation) and the output (exhalation) of carbon dioxide.', ar: '<span class="highlight-text">التعريف:</span> يشمل التنفس إدخال الأكسجين (الشهيق) وإخراج ثاني أكسيد الكربون (الزفير).' },
+                                { en: '<strong>Purposes:</strong><br>1. To acquire a baseline measurement on the patient\'s admission in which future measurements can be compared.<br>2. To determine the rate, rhythm, depth, and character of the patient\'s respiration.<br>3. To monitor abnormal respiration for patients with chest or heart disease.<br>4. To assess a patient\'s respiration prior to the administration of general anesthetic or medication such as morphine.', ar: '<strong>الأهداف:</strong><br>١. الحصول على قياس أساسي عند دخول المريض للمقارنة المستقبلية.<br>٢. تحديد معدل وإيقاع وعمق وطبيعة تنفس المريض.<br>٣. مراقبة التنفس غير الطبيعي لمرضى الصدر أو القلب.<br>٤. تقييم تنفس المريض قبل إعطاء التخدير العام أو أدوية مثل المورفين.' },
+                                { en: '<strong>Indications:</strong><br>1. Before any invasive procedure.<br>2. Heart and respiratory diseases.<br>3. Pallor or cyanosed patient.', ar: '<strong>الدواعي:</strong><br>١. قبل أي إجراء غازي.<br>٢. أمراض القلب والجهاز التنفسي.<br>٣. المريض الشاحب أو المزرق.' }
+                            ], 'التعريف والأهداف والدواعي:'),
+                            cardWithItems('Preparation & Equipment:', [
+                                { en: '<strong>Preparation:</strong><br>1. Observe the color of the skin and mucous membranes of patient, e.g., for cyanosis and/or pallor.<br>2. Patient who has been exercising will need to rest for a few minutes before measuring respiration.<br>3. Avoid explaining the procedure to the patient.<br>4. Assess rate when patient is at rest.', ar: '<strong>التحضير:</strong><br>١. لاحظ لون الجلد والأغشية المخاطية للمريض (مثل الزرقة أو الشحوب).<br>٢. يحتاج المريض الذي مارس نشاطًا بدنيًا للراحة بضع دقائق قبل قياس التنفس.<br>٣. تجنب شرح الإجراء للمريض (حتى لا يغير نمط تنفسه إراديًا).<br>٤. قيّم المعدل والمريض في حالة راحة.' },
+                                { en: '<strong>Equipment:</strong><br>1. A watch with a second hand.<br>2. The vital signs book or worksheet and pen.', ar: '<strong>المعدات:</strong><br>١. ساعة بعقرب ثوانٍ.<br>٢. دفتر أو ورقة العلامات الحيوية وقلم.' }
+                            ], 'التحضير والمعدات:'),
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '١. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('2. Gather appropriate equipment.', 'Ease performance of the procedure.', '٢. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('3. Perform hand hygiene and observe other appropriate infection control procedures.', 'Prevents spread of infection.', '٣. أجرِ نظافة اليدين واتبع إجراءات مكافحة العدوى المناسبة.', 'يمنع انتشار العدوى.'),
+                                stepItem('4. Provide for patient\'s privacy.', 'Avoid patient\'s embarrassment.', '٤. وفّر الخصوصية للمريض.', 'تجنب إحراج المريض.'),
+                                stepItem('5. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٥. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('6. Place the patient in a position of comfort, preferably sitting. Place one hand on the patient\'s wrist as if taking the radial pulse.', 'To measure accurate respiration, discomfort can cause the patient to breathe more rapidly.', '٦. ضع المريض في وضعية مريحة، ويفضل الجلوس، وضع يدًا على معصم المريض وكأنك تقيس النبض الكعبري.', 'لقياس التنفس بدقة؛ فعدم الراحة قد يجعل المريض يتنفس بشكل أسرع.'),
+                                stepItem('7. Place the patient\'s arm across his or her chest if the respirations cannot be readily observed.', 'The nurse\'s hand feels the patient\'s chest movements. The complete inhalation and exhalation count as one respiration (complete respiratory cycle).', '٧. ضع ذراع المريض عبر صدره إذا لم تكن حركات التنفس واضحة بسهولة.', 'تشعر يد الممرض بحركات صدر المريض، ويُحسب الشهيق والزفير الكاملان كدورة تنفس واحدة.'),
+                                stepItem('8. Count the respiration for 30 seconds. Multiply this number by 2 to calculate the respiratory rate per minute if regular respiratory rate. If respirations are abnormal in any way, count the respiration for at least 1 full minute.', 'To measure accurate respiration.', '٨. عدّ التنفس لمدة ٣٠ ثانية واضرب في ٢ إذا كان منتظمًا؛ أما إذا كان غير طبيعي بأي شكل فعدّ لمدة دقيقة كاملة على الأقل.', 'لقياس التنفس بدقة.'),
+                                stepItem('9. Observe the respirations for depth, rhythm, character, and chest movement, if indicated.', 'It will be indicated on the nursing care plan for the patient with respiratory problems.', '٩. لاحظ التنفس من حيث العمق والإيقاع والطبيعة وحركة الصدر إذا لزم.', 'يكون ذلك محددًا في خطة الرعاية التمريضية للمريض المصاب بمشاكل تنفسية.'),
+                                stepItem('10. Assist the patient back into the comfortable position.', '', '١٠. ساعد المريض على العودة إلى وضعية مريحة.', ''),
+                                stepItem('11. Rearrange equipment.', '', '١١. أعد ترتيب المعدات.', ''),
+                                stepItem('12. Hand washing.', '', '١٢. غسل اليدين.', ''),
+                                stepItem('13. Documentation:<br>- The rate, depth, rhythm, and character of the breathing.<br>- The position that the patient assumed for breathing.<br>- Any change that might indicate cerebral anoxia, e.g., anxious behavior, irritability, restlessness, drowsiness, or loss of consciousness.<br>- Report any abnormal characteristics such as dyspnea.', '', '١٣. التوثيق:<br>- معدل وعمق وإيقاع وطبيعة التنفس.<br>- الوضعية التي اتخذها المريض للتنفس.<br>- أي تغير قد يشير لنقص الأكسجة الدماغية مثل القلق، التهيج، الأرق، النعاس، أو فقدان الوعي.<br>- الإبلاغ عن أي خصائص غير طبيعية مثل ضيق التنفس (dyspnea).', '')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    },
+
+                    // ---------- BLOOD PRESSURE ----------
+                    {
+                        title: '10. Measuring Blood Pressure — Objectives, Def, Purposes, Indications, Prep & Equipment',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define the blood pressure.', ar: '١. تعريف ضغط الدم.' },
+                                { en: '2. List purposes of measuring blood pressure.', ar: '٢. تعداد أهداف قياس ضغط الدم.' },
+                                { en: '3. Identify indications of measuring blood pressure.', ar: '٣. تحديد دواعي قياس ضغط الدم.' },
+                                { en: '4. Prepare the patient before procedure.', ar: '٤. تحضير المريض قبل الإجراء.' },
+                                { en: '5. Collect necessary equipment for measuring blood pressure.', ar: '٥. تجميع المعدات اللازمة لقياس ضغط الدم.' },
+                                { en: '6. Perform techniques for measuring blood pressure.', ar: '٦. تنفيذ تقنيات قياس ضغط الدم.' },
+                                { en: '7. Apply the post procedures.', ar: '٧. تطبيق إجراءات ما بعد القياس.' },
+                                { en: '8. Document the result.', ar: '٨. توثيق النتيجة.' }
+                            ], 'الأهداف الأدائية:'),
+                            cardWithItems('Definition, Purposes & Indications:', [
+                                { en: '<span class="highlight-text">Definition:</span> Measuring of the pressure exerted by blood as it pulsates through the arteries.', ar: '<span class="highlight-text">التعريف:</span> قياس الضغط الذي يمارسه الدم أثناء نبضه عبر الشرايين.' },
+                                { en: '<strong>Purposes:</strong><br>1. To obtain a baseline reading upon admission to an agency.<br>2. To monitor the status of cardiovascular system.<br>3. To determine the adequacy of blood supply to a body part.<br>4. To provide early detection of problems such as hemorrhage.', ar: '<strong>الأهداف:</strong><br>١. الحصول على قراءة أساسية عند الدخول للمؤسسة الصحية.<br>٢. مراقبة حالة الجهاز القلبي الوعائي.<br>٣. تحديد كفاية إمداد الدم لجزء من الجسم.<br>٤. الكشف المبكر عن مشاكل مثل النزيف.' },
+                                { en: '<strong>Indications:</strong><br>1. Before any invasive procedure.<br>2. Heart and respiratory disease.<br>3. Pallor or cyanosed patient.', ar: '<strong>الدواعي:</strong><br>١. قبل أي إجراء غازي.<br>٢. أمراض القلب والجهاز التنفسي.<br>٣. المريض الشاحب أو المزرق.' }
+                            ], 'التعريف والأهداف والدواعي:'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Ensure that the equipment is intact and functioning properly.', ar: '١. تأكد من أن المعدات سليمة وتعمل بشكل صحيح.' },
+                                { en: '2. Check for leaks in the tubing of sphygmomanometer.', ar: '٢. افحص أنابيب جهاز قياس ضغط الدم للتأكد من عدم وجود تسربات.' },
+                                { en: '3. Make sure that the patient has not smoked or ingested caffeine because it causes a temporary increase in blood pressure.', ar: '٣. تأكد من أن المريض لم يدخن أو يتناول الكافيين لأنه يسبب ارتفاعًا مؤقتًا في ضغط الدم.' }
+                            ], 'التحضير:'),
+                            cardWithItems('Equipment:', [
+                                { en: '1. Stethoscope.', ar: '١. سماعة طبية.' },
+                                { en: '2. Sphygmomanometer blood pressure cuff:<br>- Blood pressure cuff consists of a rubber bag that can be inflated with air called the bladder.<br>- It is covered with cloth and has two tubes attached to it.<br>- One tube connects to a rubber bulb that inflates the bladder.<br>- A small valve on the side of this bulb traps and releases the air in the bladder. The other tube is attached to a Sphygmomanometer.', ar: '٢. جهاز قياس ضغط الدم وكفة الضغط:<br>- تتكون كفة الضغط من كيس مطاطي قابل للنفخ بالهواء يُسمى المثانة (bladder).<br>- مغطاة بقماش ويتصل بها أنبوبان.<br>- أنبوب يتصل ببصلة مطاطية تنفخ المثانة.<br>- صمام صغير على جانب البصلة يحبس الهواء ويطلقه، والأنبوب الآخر متصل بجهاز قياس الضغط.' },
+                                { en: '3. Gloves, if required.', ar: '٣. قفازات عند الحاجة.' },
+                                { en: '4. Antiseptic wipes.', ar: '٤. مسحات مطهرة.' },
+                                { en: '5. Vital signs flow-sheet and pen.', ar: '٥. ورقة متابعة العلامات الحيوية وقلم.' }
+                            ], 'المعدات:')
+                        ]
+                    },
+                    {
+                        title: '11. BP: A. Auscultation Method Using Brachial Artery — Steps (1–17)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Wash hands.', 'Reduces transmission of microorganisms.', '١. اغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.'),
+                                stepItem('2. Determine which extremity is most appropriate for reading. Do not take a pressure reading on an injured or a painful extremity or one in which an intravenous line is running.', 'Cuff inflation can temporarily interrupt blood flow and compromise circulation in an extremity.', '٢. حدد الطرف الأنسب للقياس، ولا تقس الضغط من طرف مصاب أو مؤلم أو به خط وريدي.', 'نفخ الكفة قد يقطع تدفق الدم مؤقتًا ويضر بالدورة الدموية في الطرف.'),
+                                stepItem('3. Select a cuff size appropriate for the patient. Estimate by measure with a tape the circumference of the bare upper arm at the midpoint between the shoulder and the elbow.', 'The bladder inside the cuff should encircle 80% of the arm in adults and 100% of the arm of children less than 13 years old.', '٣. اختر مقاس الكفة المناسب للمريض بقياس محيط العضد العاري بشريط القياس في المنتصف بين الكتف والمرفق.', 'يجب أن تحيط المثانة داخل الكفة بـ ٨٠٪ من ذراع البالغين و١٠٠٪ من ذراع الأطفال أقل من ١٣ عامًا.'),
+                                stepItem('4. Have the patient\'s bare arm resting on a support so the midpoint of the upper arm is at the level of the heart. Extend the elbow with palm turned upward.', 'Blood pressure increases when the arm is below the level of the heart and decreases when the arm is above the level of the heart.', '٤. اسند ذراع المريض العارية على دعامة بحيث يكون منتصف العضد بمستوى القلب، ومد المرفق مع توجيه راحة اليد للأعلى.', 'يزداد ضغط الدم عندما تكون الذراع أخفض من مستوى القلب وينخفض عندما تكون أعلى منه.'),
+                                stepItem('5. Make sure the bladder cuff is fully deflated and the pump valve moves freely. Place the manometer so the center of the mercury column or aneroid dial is at eye level and easily visible to the observer.', 'Equipment must be visible and must function properly to obtain an accurate reading.', '٥. تأكد من تفريغ الكفة تمامًا وحرية حركة صمام المضخة، وضع المانومتر بحيث يكون مركز عمود الزئبق أو القرص بمستوى العين ومرئيًا بوضوح.', 'يجب أن تكون المعدات مرئية وتعمل بشكل سليم للحصول على قراءة دقيقة.'),
+                                stepItem('6. Palpate the brachial artery, in the antecubital space, and place the cuff so that the midline of the bladder is over the arterial pulsation. Wrap and secure the cuff around the patient\'s bare upper arm. The lower edge of the cuff should be 1 inch (2 cm) above the antecubital fossa (bend of the elbow).', 'Rolling up the sleeve may form a tourniquet around the upper arm. Always use a bare arm.', '٦. اجسس الشريان العضدي في الحفرة المرفقية وضع الكفة بحيث يكون خط منتصف المثانة فوق النبض الشرياني، ولفها حول العضد العاري بحيث تكون حافتها السفلية ١ بوصة (٢ سم) فوق الحفرة المرفقية.', 'رفع الكم قد يشكل عاصبة حول العضد؛ لذا استخدم دائمًا ذراعًا عارية.'),
+                                stepItem('7. Insert the earpieces of the stethoscope into the ear canals with a forward tilt to fit snugly.', 'The bell, the low-frequency position of the stethoscope, enhances sound transmission from chest piece to ears.', '٧. أدخل قطعتي الأذن للسماعة في قناتي الأذن بإمالة للأمام لتستقر بإحكام.', 'الجرس (وضع التردد المنخفض للسماعة) يعزز نقل الصوت من قطعة الصدر إلى الأذنين.'),
+                                stepItem('8. Place the bell of the stethoscope over the brachial artery pulsation. The bell should be held firmly in place (chest piece should not touch the blood pressure cuff).', 'Sound is heard well directly over the artery.', '٨. ضع جرس السماعة بإحكام فوق نبض الشريان العضدي دون أن يلامس كفة الضغط.', 'يُسمع الصوت جيدًا مباشرة فوق الشريان.'),
+                                stepItem('9. With dominant hand, turn the valve clockwise to close. Compress the pump to inflate the cuff rapidly and steadily until the manometer registers 20 to 30 mm Hg above the level previously determined by the palpation.', 'Prevents air leaks during inflation. Ensures the cuff is inflated to a pressure greater than the patient\'s systolic pressure.', '٩. باليد المسيطرة، أدر الصمام باتجاه عقارب الساعة لإغلاقه، واضغط المضخة لنفخ الكفة بسرعة وثبات حتى يسجل المقياس ٢٠ إلى ٣٠ ملم زئبق فوق المستوى المحدد مسبقًا بالجس.', 'يمنع تسرب الهواء أثناء النفخ ويضمن نفخ الكفة لضغط أعلى من الضغط الانقباضي للمريض.'),
+                                stepItem('10. Partially open valve counter-clockwise to deflate the bladder at 2 mm/sec while listening for the pulse sounds.', 'Maintains constant release of pressure to ensure hearing first systolic sound.', '١٠. افتح الصمام جزئيًا عكس عقارب الساعة لتفريغ المثانة بمعدل ٢ ملم/ثانية مع الاستماع لأصوات النبض.', 'يحافظ على تفريغ ثابت للضغط لضمان سماع أول صوت انقباضي.'),
+                                stepItem('11. After the last sound is heard, deflate the cuff slowly for at least another 10 mm Hg to ensure that no other sounds are audible; then, deflate rapidly and completely.', 'Prevents arterial occlusion and patient discomfort from numbness.', '١١. بعد سماع آخر صوت، فرّغ الكفة ببطء لمسافة لا تقل عن ١٠ ملم زئبق إضافية للتأكد من عدم سماع أصوات أخرى، ثم فرّغها بسرعة وبشكل كامل.', 'يمنع انسداد الشريان وانزعاج المريض من التنميل.'),
+                                stepItem('12. Allow patient to rest for at least 30 seconds and remove cuff. Take 2 or more additional readings and average them.', 'Ensures accurate measurement.', '١٢. دع المريض يرتاح لمدة لا تقل عن ٣٠ ثانية وأزل الكفة، وخذ قراءتين إضافيتين أو أكثر واحسب المتوسط.', 'يضمن دقة القياس.'),
+                                stepItem('13. Inform the patient of the reading.', 'Promotes patient\'s participation in health care.', '١٣. أبلغ المريض بالقراءة.', 'يعزز مشاركة المريض في الرعاية الصحية.'),
+                                stepItem('14. The systolic and diastolic pressure should be immediately recorded, rounded off (upward) to the nearest 2 mmHg.', 'Ensures accuracy.', '١٤. يجب تسجيل الضغط الانقباضي والانبساطي فورًا وتقريبه (لأعلى) لأقرب ٢ ملم زئبق.', 'يضمن الدقة.'),
+                                stepItem('15. If appropriate, lower bed, raise side rails, and place call light within easy reach.', 'Promotes patient\'s safety.', '١٥. إذا كان مناسبًا، اخفض السرير وارفع الحواجز الجانبية وضع جرس النداء في متناول اليد.', 'يعزز سلامة المريض.'),
+                                stepItem('16. Put all equipment within proper place.', 'Fosters maintenance of equipment.', '١٦. أعد جميع المعدات إلى مكانها الصحيح.', 'يحافظ على المعدات وصيانتها.'),
+                                stepItem('17. Wash hands.', 'Reduces transmission of microorganisms.', '١٧. اغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.')
+                            ], 'خطوات قياس الضغط بطريقة التسمع (الشريان العضدي):', true)
+                        ]
+                    },
+                    {
+                        title: '12. BP: B. Measuring Blood Pressure from the Thigh — Steps (1–16)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '١. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('2. Explain procedure to patient.', 'Attain patient\'s cooperation.', '٢. اشرح الإجراء للمريض.', 'كسب تعاون المريض.'),
+                                stepItem('3. Gather appropriate equipment.', 'Ease performance of the procedure.', '٣. جهّز المعدات المناسبة.', 'تسهيل أداء الإجراء.'),
+                                stepItem('4. Perform hand hygiene and infection control procedures.', 'Prevents spread of infection.', '٤. أجرِ نظافة اليدين وإجراءات مكافحة العدوى.', 'يمنع انتشار العدوى.'),
+                                stepItem('5. Provide for patient\'s privacy.', 'Avoid patient\'s embarrassment.', '٥. وفّر الخصوصية للمريض.', 'تجنب إحراج المريض.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Help the patient to assume prone position if the patient cannot measure the blood pressure in a supine position with the knee slightly flexed.', '', '٧. ساعد المريض على اتخاذ وضعية الانبطاح إذا تعذر قياس الضغط في وضعية الاستلقاء الظهري مع ثني الركبة قليلاً.', ''),
+                                stepItem('8. Expose the thigh.', '', '٨. اكشف الفخذ.', ''),
+                                stepItem('9. Locate the popliteal artery.', '', '٩. حدد الشريان المأبضي.', ''),
+                                stepItem('10. Wrap the cuff evenly around the mid-thigh.', '', '١٠. لف الكفة بالتساوي حول منتصف الفخذ.', ''),
+                                stepItem('11. Compress bladder over the posterior aspect of the thigh and the bottom edge above the knee.', 'The bladder must be over the posterior popliteal artery to give accurate reading.', '١١. ضع المثانة على الجانب الخلفي للفخذ وتكون الحافة السفلية أعلى الركبة.', 'يجب أن تكون المثانة فوق الشريان المأبضي الخلفي لإعطاء قراءة دقيقة.'),
+                                stepItem('12. Carry out steps from 9 to 14 (from brachial auscultation method: inflate, deflate, note systolic & diastolic, rest, average, record).', '', '١٢. نفّذ الخطوات من ٩ إلى ١٤ (النفخ، التفريغ، تسجيل الانقباضي والانبساطي، الراحة، التوثيق).', ''),
+                                stepItem('13. Hand washing.', '', '١٣. غسل اليدين.', ''),
+                                stepItem('14. Rearrange the equipment.', '', '١٤. أعد ترتيب المعدات.', ''),
+                                stepItem('15. Place patient in comfortable position.', '', '١٥. ضع المريض في وضعية مريحة.', ''),
+                                stepItem('16. Document the result.', '', '١٦. وثّق النتيجة.', '')
+                            ], 'خطوات قياس ضغط الدم من الفخذ:', true)
+                        ]
+                    },
+                    {
+                        title: '13. BP: C. Palpation Method (Riva-Rocci Method) — Steps (1–10)',
+                        cards: [
+                            cardWithItems('Principle, Indications & Methods:', [
+                                { en: '<strong>Principle (aka Riva-Rocci Method):</strong><br>1) When the cuff pressure is higher than SBP, artery is closed, no pulse can be sensed.<br>2) When the cuff pressure drops below SBP, blood can pass through the artery and the pulse will be felt.', ar: '<strong>المبدأ (طريقة ريفا-روتشي):</strong><br>١) عندما يكون ضغط الكفة أعلى من الضغط الانقباضي، يُغلق الشريان ولا يُحس النبض.<br>٢) عندما ينخفض ضغط الكفة تحت الضغط الانقباضي، يمر الدم عبر الشريان ويُشعر بالنبض.' },
+                                { en: '<strong>Indications:</strong><br>1. If it is not possible to use stethoscope.<br>2. If the sounds cannot be heard.', ar: '<strong>الدواعي:</strong><br>١. إذا تعذر استخدام السماعة الطبية.<br>٢. إذا تعذر سماع الأصوات.' },
+                                { en: '<strong>Methods:</strong><br>1. Palpate the radial or brachial pulse site as the cuff pressure is released.<br>2. The manometer reading at the point where pulse returns is an estimate of the systolic blood pressure.', ar: '<strong>الطريقة:</strong><br>١. جس موضع النبض الكعبري أو العضدي أثناء تحرير ضغط الكفة.<br>٢. قراءة المانومتر عند نقطة عودة النبض هي تقدير لضغط الدم الانقباضي.' }
+                            ], 'المبدأ والدواعي والطريقة:'),
+                            cardWithItems('Steps of Procedure & Documentation:', [
+                                stepItem('1. Explain the procedure to the patient.', 'This decreases anxiety and promotes patient cooperation.', '١. اشرح الإجراء للمريض.', 'يقلل القلق ويعزز تعاون المريض.'),
+                                stepItem('2. Wash hands.', 'Prevents transmission of microorganisms.', '٢. اغسل يديك.', 'يمنع انتقال الكائنات الدقيقة.'),
+                                stepItem('3. Locate the patient\'s brachial or radial pulse.', 'This locates the pulse that offers the best palpable volume for the procedure.', '٣. حدد النبض العضدي أو الكعبري للمريض.', 'يحدد النبض الذي يعطي أفضل حجم محسوس للإجراء.'),
+                                stepItem('4. Place the cuff on the patient\'s arm.', 'This position helps in cuff for inflation.', '٤. ضع الكفة على ذراع المريض.', 'يساعد هذا الوضع في نفخ الكفة.'),
+                                stepItem('5. Palpate again for the pulse. When the pulse is felt, continue to palpate.', 'This relocates the pulse for the procedure.', '٥. اجسس النبض مجددًا، وعند الشعور به استمر في الجس.', 'يعيد تحديد موضع النبض للإجراء.'),
+                                stepItem('6. Inflate the cuff until unable to palpate the pulse.', 'This occludes the arterial blood flow.', '٦. انفخ الكفة حتى تعجز عن جس النبض.', 'هذا يسد تدفق الدم الشرياني.'),
+                                stepItem('7. Inflate the cuff until the measurement gauge is 20 mmHg past the point at which the pulse was lost on palpation.', 'This identifies the point of pulse return.', '٧. استمر في نفخ الكفة حتى يصل المقياس إلى ٢٠ ملم زئبق فوق النقطة التي اختفى عندها النبض.', 'يحدد نقطة عودة النبض.'),
+                                stepItem('8. Slowly deflate the cuff at a rate of 2 to 3 mm Hg per second.', 'This prevents the nurse from missing the first palpable beat.', '٨. فرّغ الكفة ببطء بمعدل ٢ إلى ٣ ملم زئبق في الثانية.', 'يمنع الممرض من تفويت أول نبضة محسوسة.'),
+                                stepItem('9. Note the reading on the measurement gauge when the pulse returns. Remove cuff from the patient\'s arm.', 'This identifies the systolic blood pressure reading.', '٩. سجل القراءة على المقياس عند عودة النبض، ثم أزل الكفة عن ذراع المريض.', 'يحدد قراءة ضغط الدم الانقباضي.'),
+                                stepItem('10. Documentations:<br>- Document blood pressure measurement on appropriate form.<br>- Report significant change in the patient\'s blood pressure to physician.<br>- Method of blood pressure measurement.<br>- Patient\'s condition.', '', '١٠. التوثيق:<br>- توثيق قياس ضغط الدم في النموذج المناسب.<br>- إبلاغ الطبيب بأي تغير ملحوظ في ضغط دم المريض.<br>- طريقة قياس ضغط الدم المستخدمة.<br>- حالة المريض.', '')
+                            ], 'خطوات الإجراء والتوثيق:', true)
+                        ]
+                    }
+                ]
+            },
+
+            // ========== UNIT IX: BLOOD GLUCOSE LEVEL BY FINGER STICK ==========
+            blood_glucose: {
+                titleEn: 'Unit IX: Blood Glucose Level',
+                titleAr: 'الوحدة التاسعة: قياس سكر الدم',
+                titleNameEn: 'Obtaining Blood Glucose Level by Finger Stick',
+                titleNameAr: 'قياس مستوى الجلوكوز في الدم عن طريق وخز الإصبع',
+                slides: [
+                    {
+                        title: '1. Objectives, Definition, Purposes, Preparation & Equipment',
+                        cards: [
+                            cardWithItems('Performance Objectives (The student will be able to):', [
+                                { en: '1. Define blood glucose test.', ar: '١. تعريف اختبار سكر الدم.' },
+                                { en: '2. List purposes of measuring blood glucose level.', ar: '٢. تعداد أهداف قياس مستوى سكر الدم.' },
+                                { en: '3. List preparation before procedure.', ar: '٣. تعداد التحضيرات قبل الإجراء.' },
+                                { en: '4. Collect equipment needed for procedure.', ar: '٤. تجميع المعدات اللازمة للإجراء.' },
+                                { en: '5. Perform procedure accurately and correctly.', ar: '٥. تنفيذ الإجراء بدقة وصحة.' }
+                            ], 'الأهداف الأدائية:'),
+                            cardWithItems('Definition & Purposes:', [
+                                { en: '<span class="highlight-text">Definition:</span> A drop of capillary blood obtained by skin puncture on finger by a single lancet or a device that holds lancet and then is applied to testing strips that is placed in a glucose monitor to be read.', ar: '<span class="highlight-text">التعريف:</span> قطرة من الدم الشعري يتم الحصول عليها بوخز جلد الإصبع بمشرط فردي أو جهاز يحمل المشرط، ثم توضع على شرائط اختبار تُدخل في جهاز قياس الجلوكوز لقراءتها.' },
+                                { en: '<strong>Purposes:</strong><br>1. To determine or monitor blood glucose levels of patients at risk for hyperglycemia or hypoglycemia.<br>2. To promote blood glucose regulation by patients.<br>3. To evaluate effectiveness of insulin administration.', ar: '<strong>الأهداف:</strong><br>١. تحديد أو مراقبة مستويات الجلوكوز في الدم للمرضى المعرضين لارتفاع أو انخفاض السكر.<br>٢. تعزيز تنظيم المرضى لمستوى سكر الدم.<br>٣. تقييم فعالية إعطاء الأنسولين.' }
+                            ], 'التعريف والأهداف:'),
+                            cardWithItems('Preparation:', [
+                                { en: '1. Before obtaining a capillary blood specimen determine frequency and type of testing.', ar: '١. قبل أخذ عينة الدم الشعري، حدد تكرار ونوع الفحص.' },
+                                { en: '2. Assess patient\'s skin at puncture site to determine if it is intact and circulation is not compromised; check color, warmth and capillary refill.', ar: '٢. قيّم جلد المريض في موقع الوخز للتأكد من سلامته وعدم تأثر الدورة الدموية؛ افحص اللون والدفء والامتلاء الشعري.' },
+                                { en: '3. Review patient\'s record for medications that may prolong bleeding such as anticoagulants or medical problems that may increase bleeding response.', ar: '٣. راجع ملف المريض للتحقق من الأدوية التي قد تطيل النزيف مثل مضادات التخثر أو المشاكل الطبية التي قد تزيد النزيف.' },
+                                { en: '4. Review type of meter and manufacturer\'s instructions:<br>- Some meters turn on when a test strip is inserted into meter.<br>- Calibrate meter and run a control sample and/or confirm code number.', ar: '٤. راجع نوع الجهاز وتعليمات الشركة المصنعة:<br>- بعض الأجهزة تعمل تلقائيًا عند إدخال شريط الاختبار.<br>- عاير الجهاز وأجرِ عينة ضبط و/أو تأكد من رقم الكود.' }
+                            ], 'التحضير:'),
+                            cardWithItems('Equipment / Supplies:', [
+                                { en: '1. Blood glucose meter.', ar: '١. جهاز قياس سكر الدم.' },
+                                { en: '2. Sterile single lancet or automatic lancet.', ar: '٢. إبرة وخز (مشرط) معقمة فردية أو جهاز وخز أوتوماتيكي.' },
+                                { en: '3. Testing strips for meter.', ar: '٣. شرائط اختبار للجهاز.' },
+                                { en: '4. Cotton ball or gauze squares.', ar: '٤. كرات قطن أو مربعات شاش.' },
+                                { en: '5. Skin cleanser soap and water or alcohol swab.', ar: '٥. منظف جلد (ماء وصابون) أو مسحة كحول.' },
+                                { en: '6. Clean gloves.', ar: '٦. قفازات نظيفة.' },
+                                { en: '7. Biohazard bag and sharps container.', ar: '٧. كيس مخلفات حيوية خطرة وحاوية أدوات حادة.' }
+                            ], 'المعدات والمستلزمات:')
+                        ]
+                    },
+                    {
+                        title: '2. Steps of Procedure & Rationales (1–19)',
+                        cards: [
+                            cardWithItems('Steps of Procedure:', [
+                                stepItem('1. Check prescriber\'s order for frequency of glucose status monitoring.', 'To confirm scheduled times for checking blood glucose.', '١. تحقق من أمر الطبيب لتكرار مراقبة حالة الجلوكوز.', 'لتأكيد الأوقات المجدولة لفحص سكر الدم.'),
+                                stepItem('2. Gather equipment.', 'This provides organized approach to task.', '٢. جهّز المعدات.', 'يوفر نهجًا منظمًا لأداء المهمة.'),
+                                stepItem('3. Perform hand hygiene and wear gloves.', 'Prevent spread of infection.', '٣. أجرِ نظافة اليدين وارتدِ القفازات.', 'يمنع انتشار العدوى.'),
+                                stepItem('4. Introduce self and verify patient\'s identity.', 'Attain patient\'s cooperation and prevent mistakes.', '٤. عرّف بنفسك وتحقق من هوية المريض.', 'كسب تعاون المريض ومنع الأخطاء.'),
+                                stepItem('5. Explain procedure to patient.', 'Attain patient\'s cooperation.', '٥. اشرح الإجراء للمريض.', 'كسب تعاون المريض.'),
+                                stepItem('6. Maintain body mechanics.', 'Prevent strain on nurse\'s back.', '٦. حافظ على ميكانيكا الجسم.', 'منع إجهاد ظهر الممرض.'),
+                                stepItem('7. Choose and assess area for puncture; site should be free from lesions and edema. The most vascular areas with fewer nerve endings are outer aspect of heel and toes, sides of fingers.', 'Areas with lesion are not suitable for capillary sampling.', '٧. اختر وقيّم منطقة الوخز؛ يجب أن تكون خالية من الآفات والوذمة. أكثر المناطق وعائية وأقلها نهايات عصبية هي الجانب الخارجي للكعب وأصابع القدم، وجوانب أصابع اليد.', 'المناطق المصابة بآفات غير مناسبة لأخذ العينات الشعرية.'),
+                                stepItem('8. Lowering hand or massage toward puncture site.', 'Increases blood flow to puncture site.', '٨. أنزل اليد لأسفل أو دلّك باتجاه موقع الوخز.', 'يزيد تدفق الدم إلى موقع الوخز.'),
+                                stepItem('9. Clean site with soap and warm water or alcohol swab; allow it to dry completely.', 'Warm water increases blood flow, reduces bacteria on skin surface from invading puncture site.', '٩. نظف الموقع بالماء الدافئ والصابون أو مسحة كحول، واتركه يجف تمامًا.', 'الماء الدافئ يزيد تدفق الدم ويقلل البكتيريا على سطح الجلد من غزو مكان الوخز.'),
+                                stepItem('10. Uncover lancet or activate automated lancet twisting and attach testing strip to meter.', 'Facilitates proper skin penetration.', '١٠. اكشف إبرة الوخز أو نشّط قلم الوخز الأوتوماتيكي بلفّه، وأدخل شريط الاختبار في الجهاز.', 'يسهل اختراق الجلد بشكل سليم.'),
+                                stepItem('11. Do not squeeze puncture site.', 'Squeezing will increase serum and dilute specimen.', '١١. لا تعصر موقع الوخز.', 'العصر يزيد السائل المصلي (السيروم) ويخفف العينة.'),
+                                stepItem('12. Place automated lancet firmly against side of finger and gently press activating button. Hold single lancet perpendicular to site.', 'Ensures correct position.', '١٢. ضع جهاز الوخز الأوتوماتيكي بإحكام على جانب الإصبع واضغط زر التشغيل بلطف (أو امسك المشرط الفردي عموديًا على الموقع).', 'يضمن الوضعية الصحيحة.'),
+                                stepItem('13. Wipe away first drop of blood with gauze or cotton ball.', 'First drop of blood contaminated by serum or cleansing product, producing an inaccurate reading.', '١٣. امسح أول قطرة دم بالشاش أو كرة القطن.', 'أول قطرة دم تكون ملوثة بالسيروم أو مادة التنظيف مما يعطي قراءة غير دقيقة.'),
+                                stepItem('14. Fill testing strip with blood by placing tip of strip at base of drop of blood, making sure that enough blood is applied on strip for accurate results.', 'Ensure accuracy of testing.', '١٤. املأ شريط الاختبار بالدم بوضع طرف الشريط عند قاعدة قطرة الدم، وتأكد من وضع كمية كافية لضمان دقة النتائج.', 'يضمن دقة الفحص.'),
+                                stepItem('15. Apply pressure to puncture site for 15 to 30 seconds with gauze to stop bleeding.', 'Direct pressure reduces bleeding.', '١٥. اضغط على موقع الوخز لمدة ١٥ إلى ٣٠ ثانية بالشاش لإيقاف النزيف.', 'الضغط المباشر يقلل النزيف.'),
+                                stepItem('16. Read blood glucose results, sharing result with patient and turn off meter.', '', '١٦. اقرأ نتيجة سكر الدم، وشارك النتيجة مع المريض وأغلق الجهاز.', ''),
+                                stepItem('17. Discard used equipment into biohazard bags or sharps container.', 'Decreases spread of blood-borne pathogens.', '١٧. تخلص من الأدوات المستخدمة في أكياس المخلفات الحيوية الخطرة أو حاوية الأدوات الحادة.', 'يقلل انتشار مسببات الأمراض المنقولة بالدم.'),
+                                stepItem('18. Remove gloves and wash hands.', 'Reduce transmission of microorganisms.', '١٨. اخلع القفازات واغسل يديك.', 'يقلل انتقال الكائنات الدقيقة.'),
+                                stepItem('19. Document time and site of stick, patient\'s glucose level, any teaching provided and report abnormal result to primary health care provider.', '', '١٩. وثّق وقت وموضع الوخز، ومستوى السكر للمريض، وأي تثقيف صحي مُقدَّم، وأبلغ الطبيب المعالج بالنتائج غير الطبيعية.', '')
+                            ], 'خطوات الإجراء:', true)
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const sectionOrder = ['body_mechanics', 'asepsis', 'vital_signs', 'blood_glucose'];
+
+        function renderSlideContent(slide) {
+            if (slide.cards && Array.isArray(slide.cards)) {
+                return createSlideHTML(slide.title, slide.cards.join(''));
+            }
+            return createSlideHTML(slide.title, '');
+        }
+
+        function switchSection(secId) {
+            document.querySelectorAll('.tab-btn').forEach(t => {
+                t.classList.toggle('active', t.dataset.section === secId);
+            });
+            document.querySelectorAll('.card').forEach(c => {
+                c.classList.toggle('active', c.id === `section-${secId}`);
+            });
+            if (secId && slideState[secId]) {
+                slideState[secId].current = 0;
+                setTimeout(() => renderSlide(secId, `slideContainer-${secId}`), 50);
+            }
+        }
+
+        function buildApp() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            const sectionsContainer = document.getElementById('sectionsContainer');
+            sectionOrder.forEach((secId, index) => {
+                const sec = slidesData[secId];
+                if (!sec) return;
+
+                const tab = document.createElement('button');
+                tab.className = 'tab-btn' + (index === 0 ? ' active' : '');
+                tab.innerHTML = `
+                    <span class="en">${sec.titleEn}</span>
+                    <span class="en-sub">${sec.titleNameEn}</span>
+                    <span class="ar">${sec.titleAr}</span>
+                    <span class="ar-sub">${sec.titleNameAr}</span>
+                `;
+                tab.dataset.section = secId;
+                tab.addEventListener('click', () => switchSection(secId));
+                tabsContainer.appendChild(tab);
+
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card' + (index === 0 ? ' active' : '');
+                cardEl.id = `section-${secId}`;
+                const slidesHTML = sec.slides.map(s => renderSlideContent(s)).join('');
+                const totalSlides = sec.slides.length;
+                cardEl.innerHTML = `
+                    <h2>
+                        <span class="lec-num">${sec.titleEn}</span>
+                        <span class="lec-title-en">${sec.titleNameEn}</span>
+                        <span class="lec-num-ar">${sec.titleAr}</span>
+                        <span class="lec-title-ar">${sec.titleNameAr}</span>
+                    </h2>
+                    <div style="text-align:center; margin-bottom:12px;">
+                        <button class="pdf-btn" onclick="downloadPDF('${secId}')">📄 تحميل الملف PDF</button>
+                    </div>
+                    <div class="slide-container" id="slideContainer-${secId}">
+                        <div class="slide-progress">
+                            <span style="font-weight:600;">التقدم</span>
+                            <div class="bar"><div class="fill" style="width:0%;"></div></div>
+                            <span class="count">1 / ${totalSlides}</span>
+                        </div>
+                        ${slidesHTML}
+                        <div class="slide-nav">
+                            <button class="btn-nav prev" onclick="goToSlide('${secId}', 'slideContainer-${secId}', slideState['${secId}'].current - 1)">السابق</button>
+                            <button class="btn-nav next primary" onclick="goToSlide('${secId}', 'slideContainer-${secId}', slideState['${secId}'].current + 1)">التالي</button>
+                        </div>
+                    </div>`;
+                sectionsContainer.appendChild(cardEl);
+
+                initSlideState(secId, totalSlides);
+                setTimeout(() => renderSlide(secId, `slideContainer-${secId}`), 50);
+            });
+
+            setTimeout(() => initTTS(), 200);
+        }
+
+        applyTheme(localStorage.getItem('theme') || 'dark');
+        buildApp();
+
+        window.goToSlide = goToSlide;
+        window.slideState = slideState;
+        window.toggleTheme = toggleTheme;
+        window.toggleCardTranslation = toggleCardTranslation;
+        window.switchSection = switchSection;
+        window.downloadPDF = downloadPDF;
+    </script>
+</body>
+</html>
+
